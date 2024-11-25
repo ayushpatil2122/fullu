@@ -1,7 +1,15 @@
 import Menu from "@/components/Menu";
 
-export default function({params} : {params : {submenu : string}}) {
-    return <>
-        <Menu submenu={params.submenu}/>
+interface PageProps {
+  params: {
+    submenu: string;
+  };
+}
+
+export default function Page({ params }: PageProps) {
+  return (
+    <>
+      <Menu submenu={params.submenu} />
     </>
+  );
 }
