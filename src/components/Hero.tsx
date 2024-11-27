@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <div className="min-h-screen flex flex-col items-center">
       {/* Hero Image */}
-      <div className="w-full h-[80vh] relative overflow-hidden">
+      <div className="w-full h-[40vh] relative overflow-hidden">
         <Image
           src="/assets/hero.jpeg"
           alt="Hotel Kolhapuri hero image"

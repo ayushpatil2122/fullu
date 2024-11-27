@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function MenuNavbar() {
-  const categories = ["Veg", "Non-Veg", "Roti's", "Rice", "Thali", "Chinese"];
+  const categories = ["Veg", "NonVeg", "Roti", "Rice", "Thali", "Chinese"];
 
   const [activeCategory, setActiveCategory] = useState("Veg");
 

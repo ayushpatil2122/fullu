@@ -10,13 +10,11 @@ interface PageProps {
 }
 
 export default function Page({ params }: PageProps) {
-    const parameter = useParams();
-    const {  selectedTable } = parameter;
-
-    console.log(selectedTable);
+  const parameter = useParams();
+  const {  selectedTable } = parameter;
   return (
     <>
-      <Menu submenu={params.submenu} />
+      <Menu submenu={params.submenu} tableNumber = {Number(selectedTable)}/>
     </>
   );
 }

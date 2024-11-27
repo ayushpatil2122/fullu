@@ -1,9 +1,6 @@
 'use client'
-
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { CheckCircle } from 'lucide-react'
+import { Link } from "lucide-react";
 import { useRouter } from 'next/navigation'
 
 
@@ -19,22 +16,10 @@ const tables = [
 ]
 
 export default function TableNumber() {
-  const [selectedTable, setSelectedTable] = useState<number | null>(null)
-
-  console.log(selectedTable);
-
   const router = useRouter();
 
   const handleTableSelect = (tableId: number) => {
-    setSelectedTable(tableId === selectedTable ? null : tableId)
-  }
-
-  const handleConfirm = () => {
-    if (selectedTable) {
-      router.push(`/table/${selectedTable}/menu/Veg`)
-    } else {
-      alert('Please select a table first')
-    }
+    router.push(`/table/${tableId}/menu/Veg`)
   }
 
   return (
@@ -44,9 +29,7 @@ export default function TableNumber() {
         {tables.map((table) => (
           <Card 
             key={table.id} 
-            className={`cursor-pointer transition-all ${
-              selectedTable === table.id ? 'ring-2 ring-primary' : ''
-            }`}
+            className={`cursor-pointer transition-all`}
             onClick={() => handleTableSelect(table.id)}
           >
             <CardContent className="p-4 flex items-center justify-between">
@@ -54,20 +37,10 @@ export default function TableNumber() {
                 <h2 className="text-lg font-semibold">Table {table.number}</h2>
                 <p className="text-sm text-gray-500">Capacity: {table.capacity}</p>
               </div>
-              {selectedTable === table.id && (
-                <CheckCircle className="text-primary h-6 w-6" />
-              )}
             </CardContent>
           </Card>
         ))}
       </div>
-      <Button 
-        onClick={handleConfirm} 
-        className="w-full"
-        disabled={!selectedTable}
-      >
-        Confirm Selection
-      </Button>
     </div>
   )
 }
