@@ -8,28 +8,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Logo Section */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="text-[#FF6B2B]">
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2" />
-                  <path d="M7 2v20" />
-                  <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
-                </svg>
-              </div>
-              <span className="text-xl font-bold">Hotel Kolhapuri</span>
+            <div className=" items-center gap-2">
+              <span className="text-xl font-bold">Excuse Me !</span>
+              <p className="text-gray-600">
+                Co Powered By : Midnight Solutions
+              </p>
             </div>
-            <p className="text-gray-600">
-              Lorem ipsum dolor sit amet consect adipiscing elit aliquam mauris.
-            </p>
+
             <div className="flex gap-4">
               <Link href="#" className="text-[#FF6B2B] hover:text-[#FF6B2B]/80">
                 <Facebook className="h-5 w-5" />
@@ -98,10 +83,10 @@ export default function Footer() {
                 </div>
                 <div>
                   <div className="text-sm text-gray-600">Email:</div>
-                  <Link href="mailto:contact@duper.com" className="text-[#FF6B2B] hover:text-[#FF6B2B]/80">
-                    contact@duper.com
-                  </Link>
-                </div>
+                    <Link href="mailto:contact@duper.com" className="text-[#FF6B2B] sm:text-xs hover:text-[#FF6B2B]/80">
+                      midnightsolutions750@gmail.com
+                    </Link>
+                  </div>
               </div>
               <div className="flex items-center gap-4 bg-[#FFF5F2] p-4 rounded-lg">
                 <div className="bg-[#FF6B2B] p-2 rounded-lg">
@@ -109,8 +94,8 @@ export default function Footer() {
                 </div>
                 <div>
                   <div className="text-sm text-gray-600">Phone:</div>
-                  <Link href="tel:(414)687-5892" className="text-[#FF6B2B] hover:text-[#FF6B2B]/80">
-                    (414) 687 - 5892
+                  <Link href="tel:(414)687-5892" className="text-[#FF6B2B] sm:text-xs hover:text-[#FF6B2B]/80">
+                    +91 9423515112
                   </Link>
                 </div>
               </div>
@@ -121,13 +106,13 @@ export default function Footer() {
         {/* Copyright */}
         <div className="mt-12 pt-8 border-t text-center text-gray-600">
           <p>
-            Copyright © Duper Burgers | Designed by{' '}
+            Copyright © Hotel Kolhapuri | Designed by {' '}
             <Link href="#" className="text-[#FF6B2B] hover:text-[#FF6B2B]/80">
-              BRIX Templates
+              Ayush Itkhede
             </Link>
-            {' '}- Powered by{' '}
+            {' '}- Powered by {' '}
             <Link href="#" className="text-[#FF6B2B] hover:text-[#FF6B2B]/80">
-              Webflow
+              Midnight Solutions
             </Link>
           </p>
         </div>

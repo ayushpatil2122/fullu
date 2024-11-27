@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react'
 export default function MenuCategories() {
   const categories = [
     {
-      title: "Breakfast",
+      title: "Starter",
       description: "Lorem ipsum dolor sit amet conse ctetur adipiscing elit sed do.",
       icon: (
         <svg

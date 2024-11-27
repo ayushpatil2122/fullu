@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+
 export default function Navbar() {
   return (
     <header className="border-b bg-white">
@@ -22,7 +23,9 @@ export default function Navbar() {
                 <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
               </svg>
             </div>
-            <span className="text-xl font-medium">Hotel Kolhapuri</span>
+            <div className="text-xl font-bold">
+              Hotel Kolhapuri
+            </div>
           </Link>
         </nav>
       </div>
