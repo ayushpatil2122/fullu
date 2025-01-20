@@ -33,3 +33,34 @@ export async function POST(request: NextRequest) {
         );
     }
 }
+
+export async function GET(request: NextRequest) {
+    try {
+        const searchParams = request.nextUrl.searchParams;
+        const tableNumber = parseInt(searchParams.get('tableNumber') ?? '0');
+
+        if (isNaN(tableNumber)) {
+            return NextResponse.json(
+                { error: "Invalid table number" },
+                { status: 400 }
+            );
+        }
+
+        const orders = await prisma.order.findMany({
+            where: {
+                tableNumber: tableNumber
+            },
+            orderBy: {
+                id: 'desc'  // Get latest orders first
+            }
+        });
+
+        return NextResponse.json(orders);
+    } catch (error) {
+        console.error("Error fetching orders:", error);
+        return NextResponse.json(
+            { error: "Error while fetching orders" },
+            { status: 500 }
+        );
+    }
+}

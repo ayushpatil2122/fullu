@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Facebook, Twitter, Instagram, Linkedin, Youtube, Phone, Mail } from 'lucide-react'
 
+
 export default function Footer() {
   return (
     <footer className="border-t py-12 px-4">
@@ -106,7 +107,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="mt-12 pt-8 border-t text-center text-gray-600">
           <p>
-            Copyright © Hotel Kolhapuri | Designed by {' '}
+            Copyright © Hotel Jagdamb | Designed by {' '}
             <Link href="#" className="text-[#FF6B2B] hover:text-[#FF6B2B]/80">
               Ayush Itkhede
             </Link>

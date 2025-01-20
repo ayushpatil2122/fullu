@@ -1,20 +1,30 @@
 'use client'
 
-import Menu from "@/components/Menu";
-import { useParams } from "next/navigation";
+import Cart from "@/components/Cart"
+import Menu from "@/components/Menu"
+import { useParams } from "next/navigation"
 
-interface PageProps {
-  params: {
-    submenu: string;
-  };
-}
+export default function Page() {
+  const params = useParams();
+  const { selectedTable, submenu } = params;
+  
+  const tableNumber = Number(selectedTable);
+  
+  if (isNaN(tableNumber) || tableNumber < 1 || tableNumber > 6) {
+    return (
+      <div className="p-4 text-red-500">
+        Invalid table number. Please select a valid table (1-6).
+      </div>
+    );
+  }
 
-export default function Page({ params }: PageProps) {
-  const parameter = useParams();
-  const {  selectedTable } = parameter;
   return (
-    <>
-      <Menu submenu={params.submenu} tableNumber = {Number(selectedTable)}/>
-    </>
+    <div className="container mx-auto p-4">
+      {submenu === "cart" ? (
+        <Cart tableNumber={tableNumber} />
+      ) : (
+        <Menu submenu={submenu as string} tableNumber={tableNumber} />
+      )}
+    </div>
   );
 }

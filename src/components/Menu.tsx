@@ -123,4 +123,3 @@ export default function Menu({ submenu, tableNumber }: { submenu: string, tableN
     </div>
   )
 }
-
