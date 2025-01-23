@@ -5,50 +5,13 @@ import { Card, CardContent } from "@/components/ui/card"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useState, useEffect } from "react"
+import { menuItems } from "@/lib/types"
 
-interface MenuItem {
-  id: number
-  name: string
-  price: string
-  image: string
-  description: string
-}
 
 export default function SpecialsMenu() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [itemsPerPage, setItemsPerPage] = useState(2)
-
-  const menuItems: MenuItem[] = [
-    {
-      id: 1,
-      name: "Butter Chicken",
-      price: '390-H, 540-F',
-      image: "/assets/butter-chicken.jpeg",
-      description: "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod dolor"
-    },
-    {
-      id: 2,
-      name: "Veg Maratha",
-      price: '220',
-      image: "/assets/veg-marath.jpeg",
-      description: "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod dolor"
-    },
-    {
-      id: 3,
-      name: "Veg Kolhapuri",
-      price: '140',
-      image: "/assets/veg-kolhapuri.jpeg",
-      description: "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod dolor"
-    },
-    {
-      id: 4,
-      name: "Chicken Tandur",
-      price: '590.',
-      image: "/assets/chicken-tandur.jpeg",
-      description: "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod dolor"
-    }
-  ]
-
+  
   useEffect(() => {
     const handleResize = () => {
       setItemsPerPage(window.innerWidth < 768 ? 1 : 2)

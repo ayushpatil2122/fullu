@@ -1,6 +1,5 @@
 'use client'
 import { Card, CardContent } from "@/components/ui/card"
-import { Link } from "lucide-react";
 import { useRouter } from 'next/navigation'
 
 
@@ -19,7 +18,7 @@ export default function TableNumber() {
   const router = useRouter();
 
   const handleTableSelect = (tableId: number) => {
-    router.push(`/table/${tableId}/menu/Veg`)
+    router.push(`/table/${tableId}`)
   }
 
   return (

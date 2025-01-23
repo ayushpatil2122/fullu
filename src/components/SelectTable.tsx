@@ -5,18 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { CheckCircle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { tables } from '@/lib/types'
 
 
-const tables = [
-  { id: 1, number: 1, capacity: 2 },
-  { id: 2, number: 2, capacity: 4 },
-  { id: 3, number: 3, capacity: 6 },
-  { id: 4, number: 4, capacity: 2 },
-  { id: 5, number: 5, capacity: 8 },
-  { id: 6, number: 6, capacity: 4 },
-  { id: 7, number: 7, capacity: 2 },
-  { id: 8, number: 8, capacity: 6 },
-]
 
 export default function SelectTable() {
   const [selectedTable, setSelectedTable] = useState<number | null>(null)

@@ -4,43 +4,10 @@ import { useEffect, useState, useRef } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Trash2, Plus, Minus } from 'lucide-react'
+import { CartProps, WebSocketMessage } from '@/lib/types'
+import { OrderItem } from '@/lib/types'
 
-export interface OrderItem {
-  id: number;
-  item: string;
-  quantity: number;
-  price: number;
-  totalPrice: number;
-}
 
-export interface Table {
-  id: string;
-  status: TableStatus;
-  size: "small" | "medium" | "large";
-  hasAlert?: boolean;
-  capacity: number;
-  lastOrder?: string;
-  orders: OrderItem[];
-}
-
-export type TableStatus = "available" | "occupied" | "ready";
-
-export interface WebSocketMessage {
-  type: "connection" | "order_update" | "admin_order_update";
-  tableNumber?: number;
-  orders?: OrderItem[];
-  status?: string;
-}
-
-export interface WSServerMessage {
-  type: "order_update";
-  tableNumber: number;
-  orders: OrderItem[];
-}
-
-interface CartProps {
-  tableNumber: number;
-}
 
 export default function Cart({ tableNumber }: CartProps) {
   const [orders, setOrders] = useState<OrderItem[]>([]);

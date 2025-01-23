@@ -45,16 +45,14 @@ export async function PATCH(
       const body = await request.json();
       const { quantity, orderId } = body;
   
-      // Validate input
+      
       if (!quantity || quantity < 1 || !orderId) {
         return NextResponse.json(
           { error: 'Invalid quantity or orderId provided' },
           { status: 400 }
         );
       }
-  
-      // Get the current order to calculate new total price
-      const currentOrder = await prisma.order.findUnique({
+        const currentOrder = await prisma.order.findUnique({
         where: { id: orderId },
       });
   
@@ -64,11 +62,9 @@ export async function PATCH(
           { status: 404 }
         );
       }
-  
-      // Calculate new total price
+        
       const newTotalPrice = currentOrder.price * quantity;
   
-      // Update the order
       const updatedOrder = await prisma.order.update({
         where: { id: orderId },
         data: {
