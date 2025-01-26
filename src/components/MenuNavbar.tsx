@@ -1,23 +1,16 @@
-'use client'
-import { useState } from "react";
-import Link from "next/link";
+"use client"
+import { useState } from "react"
+import Link from "next/link"
+import { ShoppingCart } from "lucide-react"
 
 export default function MenuNavbar() {
-  const categories = ["Veg", "NonVeg", "Roti", "Rice", "Thali", "Chinese", "cart"];
+  const categories = ["Veg", "NonVeg", "Roti", "Rice", "Thali", "Chinese"]
 
-  const [activeCategory, setActiveCategory] = useState("Veg");
-
+  const [activeCategory, setActiveCategory] = useState("Veg")
 
   return (
-    <div className=" p-6">
-      <header className="text-center mb-6">
-        <h1 className="text-4xl font-bold mb-2">Browse our menu</h1>
-        <p className="text-gray-600">
-          Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod
-          tempor incididunt ut labore et dolore.
-        </p>
-      </header>
-      <div className="flex flex-wrap justify-center gap-4 mb-8">
+    <div className="p-6 pb-10">
+      <div className="flex flex-wrap justify-center gap-4 mb-4">
         {categories.map((category) => (
           <Link href={`${category}`} key={category}>
             <button
@@ -33,7 +26,17 @@ export default function MenuNavbar() {
           </Link>
         ))}
       </div>
-
+      <div className="fixed bottom-4 right-4 z-10">
+        {" "}
+        {/* Added z-10 to ensure the button stays on top */}
+        <Link href="cart">
+          <button className="px-4 py-2 bg-orange-500 text-white text-sm font-medium rounded-lg shadow-md hover:bg-orange-600 transition-colors duration-200 flex items-center">
+            <ShoppingCart className="mr-2" size={20} />
+            Cart
+          </button>
+        </Link>
+      </div>
     </div>
-  );
+  )
 }
+

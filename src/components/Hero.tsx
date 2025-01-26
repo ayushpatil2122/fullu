@@ -1,10 +1,17 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import PulsatingButton from "@/components/ui/pulsating-button";
 import { AnimatedSubscribeButton } from "@/components/ui/animated-subscribe-button";
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
+import { useParams } from "next/navigation";
 
 export default function Hero() {
+
+  const params = useParams()
+  const tableNumber = params.selectedTable
+  
   return (
     <div>
       <div className="w-full h-[40vh] relative overflow-hidden">
@@ -57,7 +64,7 @@ export default function Hero() {
                   </span>
                 }
             />
-            <Link href="/table">
+            <Link href={`/table/${tableNumber}/menu/veg`}>
               <PulsatingButton className="bg-white text-black font-semibold px-8 py-3 rounded-full border-2 border-gray-300">
                 Browse menu
               </PulsatingButton>
