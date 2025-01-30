@@ -1,7 +1,8 @@
-'use client'
-import { Card, CardContent } from "@/components/ui/card"
-import { useRouter } from 'next/navigation'
+"use client"
 
+import { Card, CardContent } from "@/components/ui/card"
+import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
 
 const tables = [
   { id: 1, number: 1, capacity: 2 },
@@ -15,10 +16,20 @@ const tables = [
 ]
 
 export default function TableNumber() {
-  const router = useRouter();
+  const router = useRouter()
+  const [selectedTable, setSelectedTable] = useState<number | null>(null)
+
+  useEffect(() => {
+    const storedTable = localStorage.getItem("tableNumber")
+    if (storedTable) {
+      setSelectedTable(Number.parseInt(storedTable, 10))
+    }
+  }, [])
 
   const handleTableSelect = (tableId: number) => {
-    router.push(`/table/${tableId}`)
+    localStorage.setItem("tableNumber", tableId.toString())
+    setSelectedTable(tableId)
+    router.push(`/table/${selectedTable}`)
   }
 
   return (
@@ -26,9 +37,9 @@ export default function TableNumber() {
       <h1 className="text-2xl font-bold mb-6">Select a Table</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
         {tables.map((table) => (
-          <Card 
-            key={table.id} 
-            className={`cursor-pointer transition-all`}
+          <Card
+            key={table.id}
+            className={`cursor-pointer transition-all ${selectedTable === table.id ? "ring-2 ring-primary" : ""}`}
             onClick={() => handleTableSelect(table.id)}
           >
             <CardContent className="p-4 flex items-center justify-between">
@@ -43,3 +54,4 @@ export default function TableNumber() {
     </div>
   )
 }
+

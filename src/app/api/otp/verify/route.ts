@@ -1,6 +1,10 @@
 import prisma from "@/lib/db"
 import { type NextRequest, NextResponse } from "next/server"
 
+const formatTableNumber = (tableNumber: number | string): string => {
+  return String(tableNumber).padStart(2, "0");
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -10,7 +14,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Table number and OTP are required" }, { status: 400 })
     }
 
-    const formattedTableNumber = tableNumber.padStart(2, "0")
+    const formattedTableNumber = formatTableNumber(tableNumber)
 
     const storedOtp = await prisma.otp.findFirst({
       where: { tableNumber: formattedTableNumber },

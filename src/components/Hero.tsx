@@ -7,6 +7,7 @@ import { AnimatedSubscribeButton } from "@/components/ui/animated-subscribe-butt
 import { CheckIcon, ChevronRightIcon } from "lucide-react";
 import { useParams } from "next/navigation";
 
+
 export default function Hero() {
 
   const params = useParams()
@@ -41,29 +42,13 @@ export default function Hero() {
               <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
             </svg>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Hotel Jagadamb</h1>
-          <p className="font-bold	 text-gray-600 mb-8 ">
+          <h1 className="text-4xl md:text-5xl lexend font-bold mb-4">Hotel Jagadamb</h1>
+          <p className="font-bold khula	 text-gray-600 mb-8 ">
           "स्वाद महाराष्ट्राचा, सेवा आमची – बसल्या जागेवर ऑर्डर करा, स्वादिष्ट जेवणाचा आनंद घ्या!"
             <br />          
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <AnimatedSubscribeButton
-                buttonColor="#FF6B2B"
-                buttonTextColor="#ffffff"
-                subscribeStatus={false}
-                initialText={
-                  <span className="group inline-flex items-center">
-                    Order Online{" "}
-                    <ChevronRightIcon className="ml-1 size-4 transition-transform duration-300 group-hover:translate-x-1" />
-                  </span>
-                }
-                changeText={
-                  <span className="group inline-flex items-center">
-                    <CheckIcon className="mr-2 size-4" />
-                    Ordered{" "}
-                  </span>
-                }
-            />
+          
             <Link href={`/table/${tableNumber}/menu/veg`}>
               <PulsatingButton className="bg-white text-black font-semibold px-8 py-3 rounded-full border-2 border-gray-300">
                 Browse menu
@@ -74,4 +59,3 @@ export default function Hero() {
       </div>
   )
 }
-

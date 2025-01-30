@@ -3,11 +3,34 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Kalam } from "next/font/google"; 
+import { Lexend } from "next/font/google";
+import { Khula } from "next/font/google";
+
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
+});
+
+
+const lexend = Lexend({
+  subsets: ["latin"], // Include Latin subset
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], // Define all weights
+  variable: "--font-lexend",
+});
+// Google font
+const kalam = Kalam({
+  subsets: ["latin"], // Include Latin subset
+  weight: ["300", "400", "700"], // Define weights to preload
+  variable: "--font-kalam",
+});
+const khula = Khula({
+  subsets: ["latin"], // Include Latin subset
+  weight: ["400"], // Define available weights
+  variable: "--font-khula",
 });
 
 const geistMono = localFont({
@@ -29,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${kalam.variable} ${khula.variable} antialiased`}
       >
           <Navbar />
             {children}
