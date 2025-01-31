@@ -1,76 +1,101 @@
-"use client";
+"use client"
 
-import { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Trash2, Plus, Minus } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { removeFromCart, updateQuantity, clearCart } from "@/store/cartSlice";
-import { CartProps } from "@/lib/types";
-import { RootState } from "@/store/store";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+import { useEffect, useState, useRef } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Trash2, Plus, Minus, History } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
+import { removeFromCart, updateQuantity, clearCart } from "@/store/cartSlice"
+import type { CartProps, OrderItem } from "@/lib/types"
+import type { RootState } from "@/store/store"
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogDescription, 
+  DialogHeader, 
+  DialogTitle 
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function Cart({ tableNumber }: CartProps) {
-  const dispatch = useDispatch();
-  const orders = useSelector((state: RootState) => state.cart.items[tableNumber] || []);
-  const [wsConnected, setWsConnected] = useState(false);
-  const [isVerified, setIsVerified] = useState(false);
-  const [showOtpModal, setShowOtpModal] = useState(false);
-  const [otp, setOtp] = useState("");
-  const [verifying, setVerifying] = useState(false);
-  const { toast } = useToast();
-  const ws = useRef<WebSocket | null>(null);
+  const dispatch = useDispatch()
+  const orders = useSelector((state: RootState) => state.cart.items[tableNumber] || [])
+  
+  const [wsConnected, setWsConnected] = useState(false)
+  const [isVerified, setIsVerified] = useState(false)
+  const [showOtpModal, setShowOtpModal] = useState(false)
+  const [showOrderHistoryModal, setShowOrderHistoryModal] = useState(false)
+  const [otp, setOtp] = useState("")
+  const [verifying, setVerifying] = useState(false)
+  const [orderHistory, setOrderHistory] = useState<OrderItem[]>([])
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false)
 
-  // Existing WebSocket connection code...
+  const { toast } = useToast()
+  const ws = useRef<WebSocket | null>(null)
+
   const connectWebSocket = () => {
-    if (ws.current?.readyState === WebSocket.OPEN) return;
+    if (ws.current?.readyState === WebSocket.OPEN) return
 
-    ws.current = new WebSocket("ws://localhost:8080");
-    ws.current.onopen = () => setWsConnected(true);
+    ws.current = new WebSocket("ws://localhost:8080")
+    ws.current.onopen = () => setWsConnected(true)
     ws.current.onclose = () => {
-      setWsConnected(false);
-      setTimeout(connectWebSocket, 3000);
-    };
-    ws.current.onerror = () => setWsConnected(false);
-  };
+      setWsConnected(false)
+      setTimeout(connectWebSocket, 3000)
+    }
+    ws.current.onerror = () => setWsConnected(false)
+  }
 
   useEffect(() => {
-    connectWebSocket();
-    checkTableVerification();
-    return () => ws.current?.close();
-  }, []);
+    connectWebSocket()
+    checkTableVerification()
+    return () => ws.current?.close()
+  }, [])
 
   const checkTableVerification = async () => {
-    const storedVerification = sessionStorage.getItem(`verified_${tableNumber}`);
+    const storedVerification = sessionStorage.getItem(`verified_${tableNumber}`)
     if (storedVerification === "true") {
-      setIsVerified(true);
-      return;
+      setIsVerified(true)
+      return
     }
-  
+
     try {
-      const response = await fetch(`/api/secure/${tableNumber}`);
-      const data = await response.json();
+      const response = await fetch(`/api/secure/${tableNumber}`)
+      const data = await response.json()
       if (data?.isVerified) {
-        setIsVerified(true);
-        sessionStorage.setItem(`verified_${tableNumber}`, "true");
+        setIsVerified(true)
+        sessionStorage.setItem(`verified_${tableNumber}`, "true")
       }
     } catch (error) {
-      console.error("Error checking table verification:", error);
-      setIsVerified(false);
+      console.error("Error checking table verification:", error)
+      setIsVerified(false)
     }
-  };
-  
+  }
+
+  const fetchOrderHistory = async () => {
+    setIsLoadingHistory(true)
+    try {
+      const response = await fetch(`/api/order?tableNumber=${tableNumber}`)
+      if (!response.ok) {
+        throw new Error('Failed to fetch order history')
+      }
+      const history = await response.json()
+      setOrderHistory(history)
+    } catch (error) {
+      console.error("Error fetching order history:", error)
+      toast({
+        title: "Error",
+        description: "Failed to load order history",
+        variant: "destructive"
+      })
+    } finally {
+      setIsLoadingHistory(false)
+    }
+  }
 
   const verifyOtp = async () => {
-    setVerifying(true);
+    setVerifying(true)
     try {
       const response = await fetch("/api/otp/verify", {
         method: "POST",
@@ -81,73 +106,91 @@ export default function Cart({ tableNumber }: CartProps) {
           tableNumber,
           otp,
         }),
-      });
-  
-      const data = await response.json();
-  
+      })
+
+      const data = await response.json()
+
       if (response.ok) {
         toast({
           title: "Success",
           description: "OTP verified successfully",
-        });
-        setIsVerified(true);
-        sessionStorage.setItem(`verified_${tableNumber}`, "true");
-        setShowOtpModal(false);
-        sendOrderToAdmin();
+        })
+        setIsVerified(true)
+        sessionStorage.setItem(`verified_${tableNumber}`, "true")
+        setShowOtpModal(false)
+        sendOrderToAdmin()
       } else {
         toast({
           title: "Error",
           description: data.error || "Invalid OTP",
           variant: "destructive",
-        });
+        })
       }
     } catch (error) {
       toast({
         title: "Error",
         description: "Failed to verify OTP",
         variant: "destructive",
-      });
+      })
     } finally {
-      setVerifying(false);
-      setOtp("");
+      setVerifying(false)
+      setOtp("")
     }
-  };
-  
+  }
 
-  const broadcastOrderUpdate = () => {
-    if (ws.current?.readyState === WebSocket.OPEN) {
-      ws.current.send(
-        JSON.stringify({
-          type: "order_update",
-          tableNumber,
-          orders
+  const saveOrderToDatabase = async () => {
+    try {
+      for (const item of orders) {
+        const response = await fetch('/api/order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            item: item.name,
+            tableNumber,
+            price: item.price,
+            quantity: item.quantity,
+            totalPrice: item.price * item.quantity
+          })
         })
-      );
-    }
-  };
 
-  useEffect(() => {
-    if (orders.length > 0) {
-      broadcastOrderUpdate();
+        if (!response.ok) {
+          throw new Error('Failed to save order')
+        }
+      }
+      return true
+    } catch (error) {
+      console.error("Error saving order to database:", error)
+      toast({
+        title: "Error",
+        description: "Failed to save order to database",
+        variant: "destructive"
+      })
+      return false
     }
-  }, [orders]);
+  }
 
   const handleSendToAdmin = async () => {
     if (orders.length === 0) {
       toast({
         title: "No items in the cart",
-        description: "Please add some items before sending the order."
-      });
-      return;
+        description: "Please add some items before sending the order.",
+      })
+      return
     }
 
     if (!isVerified) {
-      setShowOtpModal(true);
-      return;
+      setShowOtpModal(true)
+      return
     }
 
-    sendOrderToAdmin();
-  };
+    const savedSuccessfully = await saveOrderToDatabase()
+    
+    if (savedSuccessfully) {
+      sendOrderToAdmin()
+    }
+  }
 
   const sendOrderToAdmin = () => {
     if (ws.current?.readyState === WebSocket.OPEN) {
@@ -155,57 +198,65 @@ export default function Cart({ tableNumber }: CartProps) {
         JSON.stringify({
           type: "admin_order_update",
           tableNumber,
-          orders
+          orders,
         })
-      );
+      )
       toast({
         title: "Order Sent!",
-        description: `Order from Table ${tableNumber} has been sent to the admin.`
-      });
-      dispatch(clearCart(tableNumber));
+        description: `Order from Table ${tableNumber} has been sent to the admin.`,
+      })
+      dispatch(clearCart(tableNumber))
     } else {
       toast({
         title: "Connection Error",
         description: "Failed to send order. WebSocket is not connected.",
-        variant: "destructive"
-      });
+        variant: "destructive",
+      })
     }
-  };
+  }
 
-  // Existing helper functions...
   const handleRemoveOrder = (name: string) => {
-    dispatch(removeFromCart({ name, tableNumber }));
-  };
+    dispatch(removeFromCart({ name, tableNumber }))
+  }
 
   const handleUpdateQuantity = (name: string, newQuantity: number) => {
     if (newQuantity > 0) {
-      dispatch(updateQuantity({ name, tableNumber, quantity: newQuantity }));
+      dispatch(updateQuantity({ name, tableNumber, quantity: newQuantity }))
     }
-  };
+  }
 
   const handleClearOrder = () => {
-    dispatch(clearCart(tableNumber));
-  };
+    dispatch(clearCart(tableNumber))
+  }
 
-  const totalAmount = orders.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalAmount = orders.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
   return (
     <>
       <div className="space-y-4">
         <Card className="shadow-sm">
-          {/* Existing card content... */}
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
               <span>Table {tableNumber} Order</span>
               <div className="flex items-center gap-2">
-                <span
+                <span 
                   className={`h-2 w-2 rounded-full ${
                     wsConnected ? "bg-green-500" : "bg-red-500"
-                  }`}
+                  }`} 
                 />
-                <Button
-                  variant="destructive"
-                  onClick={handleClearOrder}
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    fetchOrderHistory()
+                    setShowOrderHistoryModal(true)
+                  }}
+                  aria-label="View Order History"
+                >
+                  <History className="h-4 w-4 mr-2" /> Order History
+                </Button>
+                <Button 
+                  variant="destructive" 
+                  onClick={handleClearOrder} 
                   disabled={orders.length === 0}
                 >
                   Clear Order
@@ -218,7 +269,6 @@ export default function Cart({ tableNumber }: CartProps) {
               <p className="text-gray-500 text-center py-4">No items in cart</p>
             ) : (
               <div className="space-y-4">
-                {/* Order items rendering... */}
                 {orders.map((item) => (
                   <div
                     key={item.name}
@@ -279,7 +329,6 @@ export default function Cart({ tableNumber }: CartProps) {
           </CardContent>
         </Card>
       </div>
-
       <Dialog open={showOtpModal} onOpenChange={setShowOtpModal}>
         <DialogContent>
           <DialogHeader>
@@ -306,6 +355,46 @@ export default function Cart({ tableNumber }: CartProps) {
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Order History Modal */}
+      <Dialog open={showOrderHistoryModal} onOpenChange={setShowOrderHistoryModal}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Order History for Table {tableNumber}</DialogTitle>
+            <DialogDescription>
+              Recent orders for this table
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            {isLoadingHistory ? (
+              <div className="text-center py-4">Loading order history...</div>
+            ) : orderHistory.length === 0 ? (
+              <div className="text-center py-4 text-gray-500">
+                No previous orders found
+              </div>
+            ) : (
+              <ScrollArea className="h-[300px] pr-4">
+                {orderHistory.map((order, index) => (
+                  <div 
+                    key={index} 
+                    className="border-b last:border-b-0 py-2 flex justify-between items-center"
+                  >
+                    <div>
+                      <span className="font-medium">{order.item}</span>
+                      <div className="text-sm text-gray-500">
+                        {order.quantity} × ₹{order.price.toFixed(2)}
+                      </div>
+                    </div>
+                    <span className="font-medium">
+                      ₹{(order.quantity * order.price).toFixed(2)}
+                    </span>
+                  </div>
+                ))}
+              </ScrollArea>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
-  );
+  )
 }
