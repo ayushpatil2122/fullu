@@ -2,39 +2,37 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 
-//@ts-ignore
-export async function GET(
-    request: NextRequest,
-    { params }: { params: { tableNumber: string } }
-) {
-    try {
-        const tableNumber = parseInt(params.tableNumber);
+export async function GET(request: NextRequest) {
+  try {
+      const body = await request.json();
+      const tableNumber = parseInt(body.tableNumber);
 
-        if (isNaN(tableNumber)) {
-            return NextResponse.json(
-                { error: "Invalid table number" },
-                { status: 400 }
-            );
-        }
+      if (isNaN(tableNumber)) {
+          return NextResponse.json(
+              { error: "Invalid table number" },
+              { status: 400 }
+          );
+      }
 
-        const orders = await prisma.order.findMany({
-            where: {
-                tableNumber: tableNumber
-            },
-            orderBy: {
-                createdAt: 'desc'  // Get latest orders first
-            }
-        });
+      const orders = await prisma.order.findMany({
+          where: {
+              tableNumber: tableNumber
+          },
+          orderBy: {
+              createdAt: 'desc'  // Get latest orders first
+          }
+      });
 
-        return NextResponse.json(orders);
-    } catch (error) {
-        console.error("Error fetching orders:", error);
-        return NextResponse.json(
-            { error: "Error while fetching orders" },
-            { status: 500 }
-        );
-    }
+      return NextResponse.json(orders);
+  } catch (error) {
+      console.error("Error fetching orders:", error);
+      return NextResponse.json(
+          { error: "Error while fetching orders" },
+          { status: 500 }
+      );
+  }
 }
+
 
 
 export async function PATCH(

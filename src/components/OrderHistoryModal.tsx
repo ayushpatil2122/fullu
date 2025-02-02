@@ -25,7 +25,17 @@ export function OrderHistoryModal({
 
       setIsLoading(true)
       try {
-        const response = await fetch(`/api/orders?tableNumber=${tableNumber}`)
+        // const response = await fetch(`/api/orders?tableNumber=${tableNumber}`)
+        const response = await fetch('/api/order', {
+          method: 'GET', 
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            tableNumber: tableNumber
+          })
+        });
+        
         if (!response.ok) {
           throw new Error('Failed to fetch order history')
         }

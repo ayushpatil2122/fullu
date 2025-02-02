@@ -76,7 +76,17 @@ export default function Cart({ tableNumber }: CartProps) {
   const fetchOrderHistory = async () => {
     setIsLoadingHistory(true)
     try {
-      const response = await fetch(`/api/order?tableNumber=${tableNumber}`)
+      // const response = await fetch(`/api/order?tableNumber=${tableNumber}`)
+      const response = await fetch('/api/order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          tableNumber: tableNumber
+        })
+      });
+      
       if (!response.ok) {
         throw new Error('Failed to fetch order history')
       }
