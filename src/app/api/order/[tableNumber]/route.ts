@@ -84,30 +84,30 @@ export async function PATCH(
   
   
 
-export async function DELETE(
-    request: NextRequest,
-    { params }: { params: { tableNumber: string } }
-) {
-    try {
-        const tableNumber = parseInt(params.tableNumber);
+// export async function DELETE(
+//     request: NextRequest,
+//     { params }: { params: { tableNumber: string } }
+// ) {
+//     try {
+//         const tableNumber = parseInt(params.tableNumber);
 
-        if (isNaN(tableNumber)) {
-            return NextResponse.json(
-                { error: "Invalid table number" },
-                { status: 400 }
-            );
-        }
+//         if (isNaN(tableNumber)) {
+//             return NextResponse.json(
+//                 { error: "Invalid table number" },
+//                 { status: 400 }
+//             );
+//         }
 
-        await prisma.order.deleteMany({
-            where: { tableNumber }
-        });
+//         await prisma.order.deleteMany({
+//             where: { tableNumber }
+//         });
 
-        return NextResponse.json({ success: true });
-    } catch (error) {
-        console.error("Error clearing orders:", error);
-        return NextResponse.json(
-            { error: "Error while clearing orders" },
-            { status: 500 }
-        );
-    }
-}
+//         return NextResponse.json({ success: true });
+//     } catch (error) {
+//         console.error("Error clearing orders:", error);
+//         return NextResponse.json(
+//             { error: "Error while clearing orders" },
+//             { status: 500 }
+//         );
+//     }
+// }
