@@ -35,52 +35,52 @@ export async function GET(request: NextRequest) {
 
 
 
-export async function PATCH(
-    request: NextRequest,
-    { params }: { params: { tableNumber: string } }
-  ) {
-    try {
-      const tableNumber = parseInt(params.tableNumber);
-      const body = await request.json();
-      const { quantity, orderId } = body;
+// export async function PATCH(
+//     request: NextRequest,
+//     { params }: { params: { tableNumber: string } }
+//   ) {
+//     try {
+//       const tableNumber = parseInt(params.tableNumber);
+//       const body = await request.json();
+//       const { quantity, orderId } = body;
   
       
-      if (!quantity || quantity < 1 || !orderId) {
-        return NextResponse.json(
-          { error: 'Invalid quantity or orderId provided' },
-          { status: 400 }
-        );
-      }
-        const currentOrder = await prisma.order.findUnique({
-        where: { id: orderId },
-      });
+//       if (!quantity || quantity < 1 || !orderId) {
+//         return NextResponse.json(
+//           { error: 'Invalid quantity or orderId provided' },
+//           { status: 400 }
+//         );
+//       }
+//         const currentOrder = await prisma.order.findUnique({
+//         where: { id: orderId },
+//       });
   
-      if (!currentOrder) {
-        return NextResponse.json(
-          { error: 'Order not found' },
-          { status: 404 }
-        );
-      }
+//       if (!currentOrder) {
+//         return NextResponse.json(
+//           { error: 'Order not found' },
+//           { status: 404 }
+//         );
+//       }
         
-      const newTotalPrice = currentOrder.price * quantity;
+//       const newTotalPrice = currentOrder.price * quantity;
   
-      const updatedOrder = await prisma.order.update({
-        where: { id: orderId },
-        data: {
-          quantity: quantity,
-          totalPrice: newTotalPrice,
-        },
-      });
+//       const updatedOrder = await prisma.order.update({
+//         where: { id: orderId },
+//         data: {
+//           quantity: quantity,
+//           totalPrice: newTotalPrice,
+//         },
+//       });
   
-      return NextResponse.json(updatedOrder);
-    } catch (error) {
-      console.error('Error updating order:', error);
-      return NextResponse.json(
-        { error: 'Failed to update order' },
-        { status: 500 }
-      );
-    }
-  }
+//       return NextResponse.json(updatedOrder);
+//     } catch (error) {
+//       console.error('Error updating order:', error);
+//       return NextResponse.json(
+//         { error: 'Failed to update order' },
+//         { status: 500 }
+//       );
+//     }
+//   }
   
   
 
