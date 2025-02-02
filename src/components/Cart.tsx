@@ -38,7 +38,7 @@ export default function Cart({ tableNumber }: CartProps) {
   const connectWebSocket = () => {
     if (ws.current?.readyState === WebSocket.OPEN) return
 
-    ws.current = new WebSocket("ws://localhost:8080")
+    ws.current = new WebSocket("ws://ws-production-7739.up.railway.app/")
     ws.current.onopen = () => setWsConnected(true)
     ws.current.onclose = () => {
       setWsConnected(false)
