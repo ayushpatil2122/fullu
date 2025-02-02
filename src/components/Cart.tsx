@@ -61,7 +61,16 @@ export default function Cart({ tableNumber }: CartProps) {
     }
 
     try {
-      const response = await fetch(`/api/secure/${tableNumber}`)
+      const response = await fetch('/api/secure', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          tableNumber: tableNumber
+        })
+      });
+
       const data = await response.json()
       if (data?.isVerified) {
         setIsVerified(true)
