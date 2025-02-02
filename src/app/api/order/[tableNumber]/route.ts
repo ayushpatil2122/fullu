@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 
+//@ts-ignore
 export async function GET(
     request: NextRequest,
     { params }: { params: { tableNumber: string } }
