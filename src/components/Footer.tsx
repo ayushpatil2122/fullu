@@ -94,7 +94,7 @@ export default function Footer() {
   )
 
   return (
-    <footer className="bg-gray-900 text-gray-300 py-8 px-4">
+    <footer className="bg-gray-900 text-gray-300 py-8 px-4 mt-auto">
       <div className="max-w-7xl mx-auto">
         <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-8">
           {/* Logo Section */}
@@ -223,3 +223,4 @@ export default function Footer() {
     </footer>
   )
 }
+
