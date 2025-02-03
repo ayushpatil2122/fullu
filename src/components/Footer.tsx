@@ -76,7 +76,7 @@ export default function Footer() {
           {expandedSection === title ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
         </span>
       </button>
-      <ul className={`space-y-2 ${expandedSection === title || window.innerWidth >= 768 ? "block" : "hidden"}`}>
+      <ul>
         {items.map((item) => (
           <li key={item}>
             <Link
