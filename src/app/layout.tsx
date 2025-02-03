@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Kalam } from "next/font/google"; 
 import { Lexend } from "next/font/google";
 import { Khula } from "next/font/google";
+import { Lexend_Deca } from "next/font/google";
 
 
 
@@ -20,6 +21,12 @@ const lexend = Lexend({
   subsets: ["latin"], // Include Latin subset
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], // Define all weights
   variable: "--font-lexend",
+});
+
+const lexendDeca = Lexend_Deca({
+  subsets: ["latin"], 
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], 
+  variable: "--font-lexend-deca",
 });
 // Google font
 const kalam = Kalam({

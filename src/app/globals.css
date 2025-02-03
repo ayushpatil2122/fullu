@@ -7,11 +7,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Khula:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@600..900&display=swap');
 
 
 body {
-  font-family: Arial, Helvetica, sans-serif, Khula;
+  font-family: Arial, Helvetica, sans-serif, Khula, Lexend Deca ;
+
 }
+
+@layer base {
+  :root {
+    --font-lexend-deca: "Lexend Deca", sans-serif;
+  }
+
+  /* Utility class for Lexend Deca */
+  .font-lexend-deca {
+    font-family: var(--font-lexend-deca);
+  }
+}
+
 
 @layer base {
   :root {

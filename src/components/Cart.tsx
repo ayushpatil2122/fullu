@@ -18,13 +18,13 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import prisma from "@/lib/db"
 
 export default function Cart({ tableNumber }: CartProps) {
   const dispatch = useDispatch()
   const orders = useSelector((state: RootState) => state.cart.items[tableNumber] || [])
   
   const [wsConnected, setWsConnected] = useState(false)
-  const [isVerified, setIsVerified] = useState(false)
   const [showOtpModal, setShowOtpModal] = useState(false)
   const [showOrderHistoryModal, setShowOrderHistoryModal] = useState(false)
   const [otp, setOtp] = useState("")
@@ -53,25 +53,14 @@ export default function Cart({ tableNumber }: CartProps) {
     return () => ws.current?.close()
   }, [])
 
+
   const checkTableVerification = async () => {
-    const storedVerification = sessionStorage.getItem(`verified_${tableNumber}`)
-    if (storedVerification === "true") {
-      setIsVerified(true)
-      return
-    }
-
-    try {
-      const response = await fetch(`/api/secure?tableNumber=${tableNumber}`);
-
-      const data = await response.json()
-      if (data?.isVerified) {
-        setIsVerified(true)
-        sessionStorage.setItem(`verified_${tableNumber}`, "true")
-      }
-    } catch (error) {
-      console.error("Error checking table verification:", error)
-      setIsVerified(false)
-    }
+    const tblNo = "0" + tableNumber
+    const response = await fetch(`/api/secure?tableNumber=${tblNo}`, {
+      method : 'GET'
+    })
+    const verified = await response.json();
+    return verified;
   }
 
   const fetchOrderHistory = async () => {
@@ -96,6 +85,11 @@ export default function Cart({ tableNumber }: CartProps) {
     }
   }
 
+  function generateRandomString() {
+    return Math.random().toString(36).substring(2, 8);
+  }
+  
+
   const verifyOtp = async () => {
     setVerifying(true)
     try {
@@ -106,21 +100,44 @@ export default function Cart({ tableNumber }: CartProps) {
         },
         body: JSON.stringify({
           tableNumber,
-          otp,
+          otp
         }),
       })
 
-      const data = await response.json()
+      const data = await response.json();
 
+      // if the otp is correct
       if (response.ok) {
         toast({
           title: "Success",
           description: "OTP verified successfully",
         })
-        setIsVerified(true)
-        sessionStorage.setItem(`verified_${tableNumber}`, "true")
-        setShowOtpModal(false)
-        sendOrderToAdmin()
+
+        const tblNo = "0" + tableNumber
+        //make that table secure 
+        const response = await fetch(`/api/secure?tableNumber=${tblNo}`, {
+          method : 'PATCH'
+        })
+
+        const allocatedId = generateRandomString();
+        //save a random id in db and user localstorage
+        await fetch('/api/allocate', {
+          method : 'POST',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            tableNumber : tableNumber,
+            allocatedId : allocatedId
+          }),
+        })
+
+        localStorage.setItem('allocatedId', allocatedId);
+
+        if(response.ok) {
+          setShowOtpModal(false)
+          sendOrderToAdmin()
+        }
       } else {
         toast({
           title: "Error",
@@ -174,17 +191,20 @@ export default function Cart({ tableNumber }: CartProps) {
   }
 
   const handleSendToAdmin = async () => {
-    if (orders.length === 0) {
-      toast({
-        title: "No items in the cart",
-        description: "Please add some items before sending the order.",
-      })
-      return
-    }
+    const isVerified = await checkTableVerification();
+    console.log(isVerified)
 
     if (!isVerified) {
       setShowOtpModal(true)
       return
+    }
+
+    const response = await fetch(`/api/allocate?tableNumber=${tableNumber}`);
+    const allocatedId = await response.json();
+    const storageAllocatedId = localStorage.getItem('allocatedId');
+
+    if(allocatedId !== storageAllocatedId) {
+      throw new Error('User Can not order food')
     }
 
     const savedSuccessfully = await saveOrderToDatabase()

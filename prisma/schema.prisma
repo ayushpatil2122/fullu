@@ -39,3 +39,9 @@ model Secure {
   tableNumber String 
   isVerified  Boolean @default(false)
 }
+
+model idAllocated {
+  id          String @id @default(uuid())
+  tableNumber String 
+  allocatedId String
+}

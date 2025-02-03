@@ -80,7 +80,7 @@ export default function Footer() {
         {items.map((item) => (
           <li key={item}>
             <Link
-              href="#"
+              href={item === "Privacy Policy" ? "/privacy-policy" : "#"}
               onClick={item === "How It Works" ? openHowItWorksModal : item === "FAQs" ? openFAQModal : undefined}
               className="text-gray-400 hover:text-white transition-colors duration-300 flex items-center group"
             >

@@ -1,8 +1,28 @@
 export const menuData = {
   Starter : [
-    {name: "Masala Papad" , price: 30}
-
-  ],
+    { "name": "Masala Papad", "price": 30 },
+    { "name": "Chicken Tandoori (Half)", "price": 190 },
+    { "name": "Chicken Tandoori (Full)", "price": 360 },
+    { "name": "Chicken Pahadi Tandoori (Half)", "price": 200 },
+    { "name": "Chicken Pahadi Tandoori (Full)", "price": 360 },
+    { "name": "Chicken Lasuni Tandoori (Half)", "price": 200 },
+    { "name": "Chicken Lasuni Tandoori (Full)", "price": 360 },
+    { "name": "Chicken Afghani Tandoori (Half)", "price": 290 },
+    { "name": "Chicken Afghani Tandoori (Full)", "price": 400 },
+    { "name": "Chicken Afghani Malai Tandoori (Half)", "price": 220 },
+    { "name": "Chicken Afghani Malai Tandoori (Full)", "price": 440 },
+    { "name": "Jagdamba Special Shezwan Chicken Tandoori (Half)", "price": 220 },
+    { "name": "Jagdamba Special Shezwan Chicken Tandoori (Full)", "price": 440 },
+    { "name": "Chicken Tikka", "price": 220 },
+    { "name": "Chicken Pahadi Tikka", "price": 230 },
+    { "name": "Chicken Lasuni Tikka", "price": 230 },
+    { "name": "Chicken Afghani Tikka", "price": 240 },
+    { "name": "Chicken Malai Afghani Tikka", "price": 250 },
+    { "name": "Tandoori Lollipop (Per Piece)", "price": 220 },
+    { "name": "Masala Lollipop (Per Piece)", "price": 180 },
+    { "name": "Fry Lollipop (Per Piece)", "price": 160 }
+  ]
+  ,
   Drinks : [
     {name: "Taak" , price: 30},
     {name: "Soal Kadhi" , price: 30},
@@ -10,73 +30,310 @@ export const menuData = {
 
   ],
   Veg : [
-      { name: "Akha Masur", price: 140, description: "Akha Masur" },
-      { name: "Masur Kolhapuri", price: 160, description: "Masur Kolhapuri" },
-      { name: "Masur Lasuni", price: 170, description: "Masur Lasuni" },
-      { name: "Rajma Masala", price: 140, description: "Rajma Masala" },
-      { name: "Chana Masala", price: 150, description: "Chana Masala" },
-      { name: "Green Peas Masala", price: 150, description: "Green Peas Masala" },
-      { name: "Shev Bhaji", price: 150, description: "Shev Bhaji" },
-      { name: "Soyabean Masala", price: 150, description: "Soyabin Masala" },
-      { name: "Baigan Masala", price: 150, description: "Baigan Masala" },
-      { name: "Bhendi Masala", price: 150, description: "Bhendi Masala" },
-      { name: "Bhendi Fry", price: 150, description: "Bhendi Fry" },
-      { name: "Aloo Matar", price : 150, description: "Aloo Matar" },
-      { name: "Aloo Gobi", price: 160, description: "Aloo Gobi" },
-      { name: "Aloo Jira", price: 160, description: "Aloo Jira" },
-      { name: "Aloo Palak", price: 160, description: "Aloo Palak" },
-      { name: "Aloo Methi", price: 160, description: "Aloo Methi" },
-      { name: "Kaju Masala", price: 230, description: "Kaju Masala" },
-      { name: "Kaju Matar", price: 250, description: "Kaju Matar" },
-      { name: "Kaju Shev", price: 310, description: "Kaju Shev" },
-      { name: "Pane Palak", price: 140, description: "Pane Palak" },
-      { name: "Palak Matar", price: 160, description: "Palak Matar" },
-      { name: "Palak Mushroom", price: 210, description: "Palak Mushroom" },
-      { name: "Methi Masala", price: 140, description: "Methi Masala" },
-      { name: "Methi Matar", price: 160, description: "Methi Matar" },
-      { name: "Methi Malai", price: 210, description: "Methi Malai" },
-      { name: "Mushroom Masala", price: 210, description: "Mushroom Masala" },
-      { name: "Mushroom Kadhal", price: 230, description: "Mushroom Kadhal" },
-      { name: "Mix Veg", price: 160, description: "Mix Veg" },
-      { name: "Veg Kolhapuri", price: 220, description: "Veg Kolhapuri" },
-      { name: "Veg Handi", price: 220, description: "Veg Handi" },
-      { name: "Veg Kadhal", price: 220, description: "Veg Kadhal" },
-      { name: "Veg Hydrabadi", price: 220, description: "Veg Hydrabadi" },
-      { name: "Veg Jajpuri", price: 220, description: "Veg Jajpuri" },
-      { name: "Veg Kofta", price: 150, description: "Veg Kofta" },
-      { name: "Veg Bhuna", price: 150, description: "Veg Bhuna" },
-      { name: "Veg Maratha", price: 150, description: "Veg Maratha" },
-      { name: "Matki Masala", price: 150, description: "Matki Masala" },
-      { name: "Matki Curry", price: 160, description: "Matki Curry" },
-      { name: "Aloo Matki", price: 160, description: "Aloo Matki" },
+    {
+        "name": "Veg Kolhapuri Handi",
+        "price": 250
+    },
+    {
+        "name": "Paneer Handi",
+        "price": 270
+    },
+    {
+        "name": "Veg Handi",
+        "price": 230
+    },
+    {
+        "name": "Paneer Makhanwala Handi",
+        "price": 280
+    },
+    {
+        "name": "Paneer Rara Handi",
+        "price": 290
+    },
+    {
+        "name": "Paneer Butter Handi",
+        "price": 310
+    },
+    {
+        "name": "Paneer Tikka",
+        "price": 200
+    },
+    {
+        "name": "Paneer Pahadi Tikka",
+        "price": 220
+    },
+    {
+        "name": "Paneer Lasuni Tikka",
+        "price": 220
+    },
+    {
+        "name": "Paneer Afghani Tikka",
+        "price": 240
+    },
+    {
+        "name": "Soya Amritsari Chaap",
+        "price": 200
+    },
+    {
+        "name": "Soya Pahadi Chaap",
+        "price": 210
+    },
+    {
+        "name": "Soya Lasuni Chaap",
+        "price": 210
+    },
+    {
+        "name": "Soya Afghani Malai Chaap",
+        "price": 240
+    },
+    {
+      "name": "Paneer Butter Masala",
+      "price": 160
+    },
+    {
+        "name": "Paneer Masala",
+        "price": 150
+    },
+    {
+        "name": "Paneer Tikka Masala",
+        "price": 220
+    },
+    {
+        "name": "Paneer Makhanwala Masala",
+        "price": 160
+    },
+    {
+        "name": "Paneer Malai Kofta",
+        "price": 240
+    },
+    {
+        "name": "Paneer Kolhapuri",
+        "price": 180
+    },
+    {
+        "name": "Palak Paneer Masala",
+        "price": 180
+    },
+    {
+        "name": "Paneer Maharaja",
+        "price": 220
+    },
+    {
+        "name": "Kaju Masala",
+        "price": 200
+    },
+    {
+        "name": "Kaju Paneer",
+        "price": 210
+    },
+    {
+        "name": "Veg Maratha",
+        "price": 210
+    },
+    {
+        "name": "Veg Kolhapuri",
+        "price": 180
+    },
+    {
+        "name": "Veg Bhuna",
+        "price": 210
+    },
+    {
+        "name": "Veg Hyderabadi",
+        "price": 210
+    },
+    {
+        "name": "Veg Kadai",
+        "price": 210
+    },
+    {
+        "name": "Mix Veg",
+        "price": 160
+    },
+    {
+        "name": "Aalu Matter",
+        "price": 150
+    },
+    {
+        "name": "Akha Masoor",
+        "price": 160
+    },
+    {
+        "name": "Mushroom Masala",
+        "price": 220
+    },
+    {
+        "name": "Mushroom Kadai",
+        "price": 210
+    },
+    {
+        "name": "Soyabean Masala",
+        "price": 170
+    },
+    {
+        "name": "Shev Bhaji",
+        "price": 140
+    },
+    {
+        "name": "Dal Tadka",
+        "price": 140
+    },
+    {
+        "name": "Dal Fry",
+        "price": 130
+    }
   ],
-      
-
   Paneer : [
-      { name: "Kaju Paneer Handi", price: 310, description: "Kaju Paneer Handi" },
-      { name: "Palak Paneer", price: 190, description: "Palak Paneer" },
-      { name: "Methi Paneer", price: 190, description: "Methi Paneer" },
-      { name: "Mushroom Paneer", price: 230, description: "Mushroom Paneer" },
-      { name: "Paneer Masala", price: 140, description: "Paneer Masala" },
-      { name: "Paneer Butter Masala", price: 170, description: "Paneer Butter Masala" },
-      { name: "Paneer Makhanwala", price: 180, description: "Paneer Makhanwala" },
-      { name: "Paneer Mattar", price: 180, description: "Paneer Mattar" },
-      { name: "Paneer Kolhapuri", price: 220, description: "Paneer Kolhapuri" },
-      { name: "Paneer Tikka Masala", price: 240, description: "Paneer Tikka Masala" },
-      { name: "Paneer Bhurji Dry", price: 180, description: "Paneer Bhurji Dry" },
-      { name: "Paneer Bhurji Gravy", price: 230, description: "Paneer Bhurji Gravy" },
-      { name: "Paneer Kofta", price: 250, description: "Paneer Kofta" },
-      { name: "Paneer Handi", price: 120, description: "Paneer Handi" },
-
+      { "name": "Paneer Butter Masala", "price": 190 },
+      { "name": "Paneer Masala", "price": 190 },
+      { "name": "Paneer Tikka Masala", "price": 220 },
+      { "name": "Paneer Handi Masala", "price": 190 },
+      { "name": "Paneer Malai Kofta", "price": 240 },
+      { "name": "Paneer Kolhapuri", "price": 190 },
+      { "name": "Palak Paneer Masala", "price": 220 },
+      { "name": "Paneer Maharaja", "price": 200 }
   ],
-  Chicken : [
-    { name: "Chicken Biryani (Half)", price: 230, description: "Chicken Biryani (Half)" },
-    { name: "Chicken Hyderabadi Biryani", price: 250, description: "Chicken Hyderabadi Biryani" },
-    { name: "Chicken Sukha", price: 365, description: "Chicken Sukha" },
-    { name: "Chicken Hyderabadi", price: 370, description: "Chicken Hyderabadi" },
-    { name: "Chicken Malvani", price: 375, description: "Chicken Malvani" },
-    { name: "Chicken Handi", price: 410, description: "Chicken Handi" },
-    { name: "Chicken Kolhapuri", price: 590, description: "Chicken Kolhapuri" }
+  Chicken: [
+    {
+        "name": "Chicken Tandoor (half)",
+        "price": 190
+    },
+    {
+        "name": "Chicken Tandoor (full)",
+        "price": 360
+    },
+    {
+        "name": "Chicken Pahadi Tandoor (half)",
+        "price": 200
+    },
+    {
+        "name": "Chicken Pahadi Tandoor (full)",
+        "price": 380
+    },
+    {
+        "name": "Chicken Lasuni Tandoor (half)",
+        "price": 200
+    },
+    {
+        "name": "Chicken Lasuni Tandoor (full)",
+        "price": 380
+    },
+    {
+        "name": "Chicken Afghani Tandoor (half)",
+        "price": 210
+    },
+    {
+        "name": "Chicken Afghani Tandoor (full)",
+        "price": 400
+    },
+    {
+        "name": "Chicken Afghani Malai Tandoor (half)",
+        "price": 220
+    },
+    {
+        "name": "Chicken Afghani Malai Tandoor (full)",
+        "price": 440
+    },
+    {
+        "name": "Jagdamba Special Schezwan Chicken Tandoor (half)",
+        "price": 220
+    },
+    {
+        "name": "Jagdamba Special Schezwan Chicken Tandoor (full)",
+        "price": 440
+    },
+    {
+        "name": "Chicken Tikka",
+        "price": 220
+    },
+    {
+        "name": "Chicken Pahadi Tikka",
+        "price": 230
+    },
+    {
+        "name": "Chicken Lasuni Tikka",
+        "price": 230
+    },
+    {
+        "name": "Chicken Afghani Tikka",
+        "price": 240
+    },
+    {
+        "name": "Chicken Malai Afghani Tikka",
+        "price": 250
+    },
+    {
+        "name": "Butter Chicken Handi (half)",
+        "price": 380
+    },
+    {
+        "name": "Butter Chicken Handi (full)",
+        "price": 530
+    },
+    {
+        "name": "Chicken Handi (half)",
+        "price": 340
+    },
+    {
+        "name": "Chicken Handi (full)",
+        "price": 490
+    },
+    {
+        "name": "Chicken Angara Handi (half)",
+        "price": 350
+    },
+    {
+        "name": "Chicken Angara Handi (full)",
+        "price": 510
+    },
+    {
+        "name": "Chicken Hyderabadi Handi (half)",
+        "price": 360
+    },
+    {
+        "name": "Chicken Hyderabadi Handi (full)",
+        "price": 510
+    },
+    {
+        "name": "Chicken Maharaja Handi (half)",
+        "price": 400
+    },
+    {
+        "name": "Chicken Maharaja Handi (full)",
+        "price": 540
+    },
+    {
+        "name": "Chicken Do Pyaza Handi (half)",
+        "price": 340
+    },
+    {
+        "name": "Chicken Do Pyaza Handi (full)",
+        "price": 480
+    },
+    {
+        "name": "Chicken Malvani Handi (half)",
+        "price": 390
+    },
+    {
+        "name": "Chicken Malvani Handi (full)",
+        "price": 560
+    },
+    {
+        "name": "Chicken Kolhapuri Handi (half)",
+        "price": 350
+    },
+    {
+        "name": "Chicken Kolhapuri Handi (full)",
+        "price": 580
+    },
+    {
+        "name": "Chicken Murg Musallam Handi (half)",
+        "price": 480
+    },
+    {
+        "name": "Chicken Murg Musallam Handi (full)",
+        "price": 910
+    }
   ],
   Eggs : [
     { name: "Anda Boil", price: 70, description: "Anda Boil" },
@@ -87,27 +344,104 @@ export const menuData = {
     { name: "Anda Hyderabadi", price: 160, description: "Anda Hyderabadi" },
     { name: "Anda Biryani", price: 170, description: "Anda Biryani" },
   ],
-  Mutton : [
-    
-    { name: "Mutton Biryani", price: 290, description: "Mutton Biryani" },
-    { name: "Mutton Malvani", price: 350, description: "Mutton Malvani" },
-    { name: "Mutton Sukha", price: 470, description: "Mutton Sukha" },
-    { name: "Mutton Kolhapuri", price: 470, description: "Mutton Kolhapuri" },
-    { name: "Mutton Hyderabadi", price: 470, description: "Mutton Hyderabadi" },
-    { name: "Mutton Handi", price: 495, description: "Mutton Handi" },
+  Mutton: [
+    {
+        "name": "Mutton Masala",
+        "price": 280
+    },
+    {
+        "name": "Mutton Kadai",
+        "price": 330
+    },
+    {
+        "name": "Mutton Fry",
+        "price": 290
+    },
+    {
+        "name": "Mutton Mughlai",
+        "price": 340
+    },
+    {
+        "name": "Mutton Angara",
+        "price": 360
+    },
+    {
+        "name": "Mutton Tawa",
+        "price": 310
+    },
+    {
+        "name": "Mutton Biryani",
+        "price": 290,
+        "description": "Mutton Biryani"
+    },
+    {
+        "name": "Mutton Malvani",
+        "price": 350,
+        "description": "Mutton Malvani"
+    },
+    {
+        "name": "Mutton Sukha",
+        "price": 470,
+        "description": "Mutton Sukha"
+    },
+    {
+        "name": "Mutton Kolhapuri",
+        "price": 470,
+    },
+    {
+        "name": "Mutton Hyderabadi",
+        "price": 470,
+    },
+    {
+        "name": "Mutton Handi (half)",
+        "price": 460
+    },
+    {
+        "name": "Mutton Handi (full)",
+        "price": 640
+    },
+    {
+        "name": "Mutton Angara Handi (half)",
+        "price": 480
+    },
+    {
+        "name": "Mutton Angara Handi (full)",
+        "price": 650
+    },
+    {
+        "name": "Mutton Malvani Handi (half)",
+        "price": 520
+    },
+    {
+        "name": "Mutton Malvani Handi (full)",
+        "price": 700
+    },
+    {
+        "name": "Mutton Kolhapuri Handi (half)",
+        "price": 460
+    },
+    {
+        "name": "Mutton Kolhapuri Handi (full)",
+        "price": 640
+    },
+    {
+        "name": "Mutton Maharaja Handi (half)",
+        "price": 450
+    },
+    {
+        "name": "Mutton Maharaja Handi (full)",
+        "price": 630
+    }
   ],
   Roti : [
-    { name: "Chapati", price: 12, description: "Chapati" },
-    { name: "Butter Chapati", price: 15, description: "Butter Chapati" },
-    { name: "Roti", price: 15, description: "Roti" },
-    { name: "Butter Roti", price: 22, description: "Butter Roti" },
-    { name: "Naan", price: 40, description: "Naan" },
-    { name: "Butter Naan", price: 45, description: "Butter Naan" },
-    { name: "Garlic Butter Naan", price: 55, description: "Garlic Butter Naan" },
-    { name: "Kulcha", price: 40, description: "Kulcha" },
-    { name: "Butter Kulcha", price: 45, description: "Butter Kulcha" },
-    { name: "Paratha", price: 45, description: "Paratha" },
-    { name: "Butter Paratha", price: 50, description: "Butter Paratha" }
+    { "name": "Tandoor Roti", "price": 18 },
+    { "name": "Butter Roti", "price": 23 },
+    { "name": "Naan", "price": 40 },
+    { "name": "Butter Naan", "price": 50 },
+    { "name": "Garlic Naan", "price": 45 },
+    { "name": "Garlic Butter Naan", "price": 50 },
+    { "name": "Chapati", "price": 12 },
+    { "name": "Butter Chapati", "price": 15 }
   ],
   Dal : [
     { name: "Dal Fry", price: 140, description: "Dal Fry" },
@@ -115,32 +449,110 @@ export const menuData = {
       { name: "Dal Kolhapuri", price: 190, description: "Dal Kolhapuri" },
       { name: "Dal Tadka", price: 210, description: "Dal Tadka" },
   ],
-  Rice : [
-  { name: "Plain Rice", price: 80, description: "Plain Rice" },
-  { name: "Jeera Rice", price: 90, description: "Jeera Rice" },
-  { name: "Dal Khichadi", price: 150, description: "Dal Khichadi" },
-  { name: "Green Peas Pulav", price: 160, description: "Green Peas Pulav" },
-  { name: "Veg Biryani", price: 160, description: "Veg Biryani" },
-  { name: "Veg Pulav", price: 170, description: "Veg Pulav" },
-  { name: "Paneer Biryani", price: 170, description: "Paneer Biryani" },
-  { name: "Veg Hyderabadi Biryani", price: 180, description: "Veg Hyderabadi Biryani" },
-  { name: "Paneer Pulav", price: 180, description: "Paneer Pulav" },
-  { name: "Mushroom Biryani", price: 210, description: "Mushroom Biryani" },
-  { name: "Kaju Biryani", price: 210, description: "Kaju Biryani" }
+  Rice: [
+  {
+    "name": "Plain Rice",
+    "price": "90"
+  },
+  {
+    "name": "Jeera Rice",
+    "price": "70"
+  },
+  {
+    "name": "Indrayani Rice",
+    "price": "70"
+  },
+  {
+    "name": "Veg Pulao",
+    "price": "140"
+  },
+  {
+    "name": "Dal Khichdi",
+    "price": "140"
+  },
+  {
+    "name": "Dal Khichdi Tadka",
+    "price": "160"
+  },
+  {
+    "name": "Paneer Pulao",
+    "price": "170"
+  }
 ],
 Thali : [
-  { name: "Green Peas Thali", price: 140, description: "Green Peas, 3 Chapati / 2 Roti, Dal Vati, Jeera Rice, Tak Vati" },
-  { name: "Akkha Masur Thali", price: 140, description: "Akkha Masur, 3 Chapati / 2 Roti, Dal Vati, Jeera Rice, Tak Vati" },
-  { name: "Shev Bhaji Thali", price: 150, description: "Shevbhaji, 3 Chapati / 2 Roti, Dal Vati, Jeera Rice, Tak Vati" },
-  { name: "Bhendi Masala Thali", price: 150, description: "Bhendi Masala, 3 Chapati / 2 Roti, Dal Vati, Jeera Rice, Tak Vati" },
-  { name: "Baigan Masala Thali", price: 150, description: "Baigan Masala, 3 Chapati / 2 Roti, Dal Vati, Jeera Rice, Tak Vati" },
-  { name: "Mix Veg Thali", price: 150, description: "Mix Veg, 3 Chapati / 2 Roti, Dal Vati, Jeera Rice, Tak Vati" },
-  { name: "Alu Mutter Thali", price: 150, description: "Alu Mutter, 3 Chapati / 2 Roti, Dal Vati, Jeera Rice, Tak Vati" },
-  { name: "Paneer Masala Thali", price: 150, description: "Paneer, 3 Chapati / 2 Roti, Dal Vati, Jeera Rice, Tak Vati" },
-  { name: "Soyabin Thali", price: 150, description: "Soyabin, 3 Chapati / 2 Roti, Dal Vati, Jeera Rice, Tak Vati" },
-  { name: "Matki Thali", price: 150, description: "Matki, 3 Chapati / 2 Roti, Dal Vati, Jeera Rice, Tak Vati" },
-  { name: "Rajma Thali", price: 150, description: "Rajma, 3 Chapati / 2 Roti, Dal Vati, Jeera Rice, Tak Vati" },
-  { name: "Chana Masala Thali", price: 150, description: "Chana Masala, 3 Chapati / 2 Roti, Dal Vati, Jeera Rice, Tak Vati" },
+  {
+    "name": "Special Mutton Thali",
+    "price": "510"
+  },
+  {
+    "name": "Mutton Masala Thali",
+    "price": "350"
+  },
+  {
+    "name": "Mutton Fry Thali",
+    "price": "350"
+  },
+  {
+    "name": "Special Bhigwan Fish Thali",
+    "price": 450
+  },
+  {
+      "name": "Fish Masala Thali",
+      "price": 290
+  },
+  {
+      "name": "Fish Fry Thali",
+      "price": 290
+  },
+  {
+      "name": "Fish Alani Thali",
+      "price": 290
+  },
+  {
+    "name": "Special Chicken Thali",
+    "price": 380
+  },
+  {
+      "name": "Chicken Kolha Masala Thali",
+      "price": 260
+  },
+  {
+      "name": "Chicken Masala Thali",
+      "price": 230
+  },
+  {
+      "name": "Anda Thali",
+      "price": 180
+  },
+  {
+    "name": "Special Veg Thali",
+    "price": 220
+  },
+  {
+      "name": "Paneer Masala Thali",
+      "price": 150
+  },
+  {
+      "name": "Matter Paneer Thali",
+      "price": 150
+  },
+  {
+      "name": "Shev Bhaji Thali",
+      "price": 130
+  },
+  {
+      "name": "Akha Masoor Thali",
+      "price": 150
+  },
+  {
+      "name": "Mix Veg Thali",
+      "price": 150
+  },
+  {
+      "name": "Kaju Masala Thali",
+      "price": 180
+  }
+
 ],
 Chinese : [
   { name: "Veg Manchurian", price: 170, description: "Veg Manchurian" },

@@ -12,6 +12,7 @@ export default function Hero() {
 
   const params = useParams()
   const tableNumber = params.selectedTable
+  console.log(params);
   
   return (
     <div>
@@ -49,11 +50,14 @@ export default function Hero() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           
-            <Link href={`/table/${tableNumber}/menu/Veg`}>
-              <PulsatingButton className="bg-white text-black font-semibold px-8 py-3 rounded-full border-2 border-gray-300">
-                Browse menu
-              </PulsatingButton>
-            </Link>
+          {tableNumber && (
+  <Link href={`/table/${tableNumber}/menu/Veg`} passHref>
+    <PulsatingButton className="bg-white text-black font-semibold px-8 py-3 rounded-lg border-2 border-gray-300">
+      Browse menu
+    </PulsatingButton>
+  </Link>
+)}
+
           </div>
         </div>
       </div>
