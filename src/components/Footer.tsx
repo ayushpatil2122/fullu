@@ -76,7 +76,7 @@ export default function Footer() {
           {expandedSection === title ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
         </span>
       </button>
-      <ul>
+      <ul className={`space-y-2 ${expandedSection === title || window.innerWidth >= 768 ? "block" : "hidden"}`}>
         {items.map((item) => (
           <li key={item}>
             <Link
@@ -94,7 +94,7 @@ export default function Footer() {
   )
 
   return (
-    <footer className="bg-gray-900 text-gray-300 py-8 px-4 mt-auto">
+    <footer className="bg-gray-900 text-gray-300 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-8">
           {/* Logo Section */}
@@ -223,4 +223,3 @@ export default function Footer() {
     </footer>
   )
 }
-

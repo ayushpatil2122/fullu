@@ -5,6 +5,7 @@ import prisma from "@/lib/db";
 export async function GET(request: NextRequest) {
   try {
       const body = await request.json();
+      console.log(body);
       const tableNumber = parseInt(body.tableNumber);
 
       if (isNaN(tableNumber)) {

@@ -1,4 +1,14 @@
 export const menuData = {
+  Starter : [
+    {name: "Masala Papad" , price: 30}
+
+  ],
+  Drinks : [
+    {name: "Taak" , price: 30},
+    {name: "Soal Kadhi" , price: 30},
+    {name: "Dahi" , price: 30}
+
+  ],
   Veg : [
       { name: "Akha Masur", price: 140, description: "Akha Masur" },
       { name: "Masur Kolhapuri", price: 160, description: "Masur Kolhapuri" },

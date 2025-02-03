@@ -1,17 +1,55 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
+import { useState, useEffect, useCallback } from "react"
 import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import { ChevronLeft, ChevronRight, Star } from "lucide-react"
-import { useState, useEffect, useCallback } from "react"
 import { menuItems } from "@/lib/types"
-import { Badge } from "@/components/ui/badge"
 
+// This would typically come from an API or database
+const bestSellerItems = [
+  {
+    id: 1,
+    name: "Butter Chicken",
+    description: "Tender chicken in a rich, creamy tomato sauce",
+    price: 350,
+    image: "/butt-chick.jpg",
+    rating: 4.8,
+    soldCount: 1500,
+  },
+  {
+    id: 2,
+    name: "Paneer Tikka",
+    description: "Grilled cottage cheese with spices and vegetables",
+    price: 280,
+    image: "/paneer-tikka.jpg",
+    rating: 4.6,
+    soldCount: 1200,
+  },
+  {
+    id: 3,
+    name: "Biryani",
+    description: "Fragrant rice dish with aromatic spices and meat or vegetables",
+    price: 320,
+    image: "/biryani.jpg",
+    rating: 4.9,
+    soldCount: 1800,
+  },
+  {
+    id: 4,
+    name: "Masala Dosa",
+    description: "Crispy fermented crepe filled with spiced potatoes",
+    price: 180,
+    image: "/masala-dosa.jpg",
+    rating: 4.7,
+    soldCount: 1400,
+  },
+]
 
-export default function SpecialsMenu() {
+export default function BestSellers() {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [itemsPerPage, setItemsPerPage] = useState(3)
+  const [itemsPerPage, setItemsPerPage] = useState(2)
   const [touchStart, setTouchStart] = useState(0)
   const [touchEnd, setTouchEnd] = useState(0)
 
@@ -38,7 +76,6 @@ export default function SpecialsMenu() {
   const prevSlide = useCallback(() => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? menuItems.length - 1 : prevIndex - 1))
   }, [])
-
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.targetTouches[0].clientX)
   }
@@ -58,9 +95,9 @@ export default function SpecialsMenu() {
   }
 
   return (
-    <section className="py-12 sm:py-16 px-4 bg-gradient-to-b from-white to-orange-50">
+    <section className="py-12 sm:py-16 px-4 bg-gradient-to-b from-orange-50 to-white">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 text-[#FF6B2B]">Today's Special</h2>
+        <h2 className="text-3xl sm:text-4xl font-bold text-center mb-8 sm:mb-12 text-[#FF6B2B]">Our Best Sellers</h2>
 
         <div className="relative">
           <button
@@ -93,7 +130,7 @@ export default function SpecialsMenu() {
                         className="w-full h-[200px] sm:h-[250px] object-cover"
                         loading="lazy"
                       />
-                      <Badge className="absolute top-2 left-2 bg-[#FF6B2B] text-white">Special</Badge>
+                      <Badge className="absolute top-2 left-2 bg-[#FF6B2B] text-white">Best Seller</Badge>
                       <div className="absolute bottom-2 right-2 bg-white px-3 py-1 rounded-full text-sm font-bold border-2 border-[#FF6B2B] text-[#FF6B2B]">
                         ₹{item.price}
                       </div>

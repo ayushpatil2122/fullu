@@ -4,8 +4,19 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
+import { useParams } from "next/navigation"
 
 export default function MenuCategories() {
+  const params = useParams()
+  const tableNumber = params.selectedTable // Fetch table number from URL parameters
+
+  const categoryMapping: { [key: string]: string } = {
+    "Main Dishes": "Veg",
+    "Starter": "Starter",
+    "Drinks": "Drinks",
+    "Chinese": "Chinese",
+  }
+
   const categories = [
     {
       title: "Starter",
@@ -41,8 +52,8 @@ export default function MenuCategories() {
       ),
     },
     {
-      title: "Desserts",
-      description: "Indulge in our heavenly sweet treats to end your meal.",
+      title: "Chinese",
+      description: "Explore the delightful flavors of Chinese cuisine.",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-12 h-12">
           <path d="M5 8h14" />
@@ -66,31 +77,35 @@ export default function MenuCategories() {
         </motion.h2>
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
-          {categories.map((category, index) => (
-            <motion.div
-              key={index}
-              className="bg-white rounded-3xl p-8 flex flex-col items-center text-center shadow-lg  transition-shadow duration-300"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <div className="mb-6">
-                <div className="text-[#FF6B2B] bg-orange-50 p-4 rounded-full">{category.icon}</div>
-              </div>
-              <h3 className="text-2xl font-bold mb-4 text-[#FF6B2B]">{category.title}</h3>
-              <p className="text-gray-600 mb-6">{category.description}</p>
-              <Button
-                asChild
-                variant="outline"
-                className="text-[#FF6B2B] border-[#FF6B2B] hover:bg-white hover:text-[#FF6B2B] transition-colors duration-300"
+          {categories.map((category, index) => {
+            const mappedCategory = categoryMapping[category.title] || category.title // Get mapped category or fallback to original
+
+            return (
+              <motion.div
+                key={index}
+                className="bg-white rounded-3xl p-8 flex flex-col items-center text-center shadow-lg transition-shadow duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Link href="#" className="group">
-                  Browse Category
-                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
-                </Link>
-              </Button>
-            </motion.div>
-          ))}
+                <div className="mb-6">
+                  <div className="text-[#FF6B2B] bg-orange-50 p-4 rounded-full">{category.icon}</div>
+                </div>
+                <h3 className="text-2xl font-bold mb-4 text-[#FF6B2B]">{category.title}</h3>
+                <p className="text-gray-600 mb-6">{category.description}</p>
+                <Button
+                  asChild
+                  variant="outline"
+                  className="text-[#FF6B2B] border-[#FF6B2B] hover:bg-white hover:text-[#FF6B2B] transition-colors duration-300"
+                >
+                  <Link href={`/table/${tableNumber}/menu/${mappedCategory}`} passHref>
+                    Browse Category
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+                  </Link>
+                </Button>
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>

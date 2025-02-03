@@ -64,3 +64,37 @@ export async function GET(request: NextRequest) {
         );
     }
 }
+
+// export async function GET(request: NextRequest) {
+//     try {
+//         const body = await request.json();
+//         const tableNumber = parseInt(body.tableNumber);
+
+//         console.log(body);
+  
+//         if (isNaN(tableNumber)) {
+//             return NextResponse.json(
+//                 { error: "Invalid table number" },
+//                 { status: 400 }
+//             );
+//         }
+  
+//         const orders = await prisma.order.findMany({
+//             where: {
+//                 tableNumber: tableNumber
+//             },
+//             orderBy: {
+//                 createdAt: 'desc'  // Get latest orders first
+//             }
+//         });
+  
+//         return NextResponse.json(orders);
+//     } catch (error) {
+//         console.error("Error fetching orders:", error);
+//         return NextResponse.json(
+//             { error: "Error while fetching orders" },
+//             { status: 500 }
+//         );
+//     }
+//   }
+  

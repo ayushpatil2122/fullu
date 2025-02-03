@@ -1,21 +1,35 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ShoppingCart } from "lucide-react"
+import { useParams, usePathname } from "next/navigation"
 
 export default function MenuNavbar() {
-  const categories = ["Veg","Paneer", "Chicken" , "Eggs", "Mutton", "Roti","Dal" , "Rice", "Thali", "Chinese"]
+  const categories = [
+    "Starter", "Veg", "Paneer", "Chicken", "Eggs", "Mutton",
+    "Roti", "Dal", "Rice", "Thali", "Chinese", "Drinks", "cart"
+  ]
 
-  const [activeCategory, setActiveCategory] = useState("Veg")
+  // Get the current pathname
+  const pathname = usePathname()
+  // Extract the category from the pathname
+  const currentCategory = pathname.split("/").pop() || "Veg"
+
+  // Set the active category based on the current route
+  const [activeCategory, setActiveCategory] = useState(currentCategory)
+
+  // Update the activeCategory state when the route changes
+  useEffect(() => {
+    setActiveCategory(currentCategory)
+  }, [currentCategory])
 
   return (
-    <div className="p-6 pb-10">
-      <div className="flex flex-wrap justify-center gap-4 mb-4">
+    <div className="p-4 pb-8">
+      <div className="grid grid-cols-6 sm:grid-cols-4 gap-2">
         {categories.map((category) => (
-          <Link href={`${category}`} key={category}>
+          <Link href={`${category}`} key={category} className="w-full">
             <button
               onClick={() => setActiveCategory(category)}
-              className={`px-3 py-2 text-sm font-medium border rounded-lg transition-colors duration-200 ${
+              className={`w-full py-2 text-sm font-medium border rounded-lg text-center transition-all duration-200 ${
                 activeCategory === category
                   ? "bg-orange-500 text-white"
                   : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
@@ -25,16 +39,6 @@ export default function MenuNavbar() {
             </button>
           </Link>
         ))}
-      </div>
-      <div className="fixed bottom-4 right-4 z-10">
-        {" "}
-        {/* Added z-10 to ensure the button stays on top */}
-        <Link href="cart">
-          <button className="px-4 py-2 bg-orange-500 text-white text-sm font-medium rounded-lg shadow-md hover:bg-orange-600 transition-colors duration-200 flex items-center">
-            <ShoppingCart className="mr-2" size={20} />
-            Cart
-          </button>
-        </Link>
       </div>
     </div>
   )
