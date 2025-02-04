@@ -18,7 +18,7 @@ export const menuItems: MenuItem[] = [
     id: 2,
     name: "Paneer Masala",
     price: '220',
-    image: "/assets/paneer masala.jfif",
+    image: "/assets/paneer masala.jpeg",
   },
  
   {
