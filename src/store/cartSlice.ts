@@ -8,10 +8,12 @@ export interface CartItem {
 
 interface CartState {
   items: { [tableNumber: number]: CartItem[] };
+  newItemsCount: number; 
 }
 
 const initialState: CartState = {
   items: {},
+  newItemsCount: 0,
 };
 
 const cartSlice = createSlice({
@@ -29,6 +31,7 @@ const cartSlice = createSlice({
       } else {
         state.items[tableNumber].push(item);
       }
+      state.newItemsCount += item.quantity;
     },
     removeFromCart: (state, action: PayloadAction<{ name: string; tableNumber: number }>) => {
       const { name, tableNumber } = action.payload;
@@ -47,8 +50,11 @@ const cartSlice = createSlice({
       const tableNumber = action.payload;
       state.items[tableNumber] = [];
     },
+    resetNewItemsCount: (state) => {
+      state.newItemsCount = 0;
+    },
   },
 });
 
-export const { addToCart, removeFromCart, updateQuantity, clearCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, updateQuantity, clearCart, resetNewItemsCount } = cartSlice.actions;
 export default cartSlice.reducer;

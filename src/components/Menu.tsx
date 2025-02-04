@@ -1,7 +1,5 @@
 "use client"
 
-import { toast } from "@/hooks/use-toast"
-import type { MenuItem } from "@/lib/types"
 import type { RootState } from "@/store/store"
 import { useDispatch, useSelector } from "react-redux"
 import { Button } from "./ui/button"
@@ -49,11 +47,6 @@ const Menu: React.FC<MenuProps> = ({ submenu, tableNumber }) => {
     (item: OrderItem) => {
       const quantity = quantities[item.name] || 0
       if (quantity === 0) {
-        toast({
-          title: "Cannot add to order",
-          description: "Please select a quantity greater than zero.",
-          variant: "destructive",
-        })
         return
       }
 
@@ -72,11 +65,6 @@ const Menu: React.FC<MenuProps> = ({ submenu, tableNumber }) => {
           }),
         )
       }
-
-      toast({
-        title: "Item added to cart",
-        description: `Added ${quantity} ${item.name}(s) to your cart.`,
-      })
       setQuantities((prev) => ({ ...prev, [item.name]: 0 }))
     },
     [cartItems, dispatch, quantities, tableNumber],
@@ -103,9 +91,9 @@ const Menu: React.FC<MenuProps> = ({ submenu, tableNumber }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {filteredItems.map((item) => (
           <Card
-  key={item.name}
-  className="overflow-hidden transition-shadow duration-300 hover:shadow-md rounded-lg border border-gray-200"
->
+            key={item.name}
+            className="overflow-hidden transition-shadow duration-300 hover:shadow-md rounded-lg border border-gray-200"
+          >
             {/* Header */}
             <CardHeader className="bg-gray-50 p-4 ">
               <CardTitle className="text-lg font-semibold  font-lexend-deca text-gray-900">{item.name}</CardTitle>

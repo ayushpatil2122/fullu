@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Trash2, Plus, Minus, History } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { removeFromCart, updateQuantity, clearCart } from "@/store/cartSlice"
+import { removeFromCart, updateQuantity, clearCart, resetNewItemsCount } from "@/store/cartSlice"
 import type { CartProps, OrderItem } from "@/lib/types"
 import type { RootState } from "@/store/store"
 import { 
@@ -48,11 +48,14 @@ export default function Cart({ tableNumber }: CartProps) {
   }
 
   useEffect(() => {
+    dispatch(resetNewItemsCount());
+  }, [dispatch]);
+
+  useEffect(() => {
     connectWebSocket()
     checkTableVerification()
     return () => ws.current?.close()
   }, [])
-
 
   const checkTableVerification = async () => {
     const tblNo = "0" + tableNumber
@@ -88,7 +91,6 @@ export default function Cart({ tableNumber }: CartProps) {
   function generateRandomString() {
     return Math.random().toString(36).substring(2, 8);
   }
-  
 
   const verifyOtp = async () => {
     setVerifying(true)
@@ -342,8 +344,12 @@ export default function Cart({ tableNumber }: CartProps) {
                   <span>₹{totalAmount.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-center pt-4">
-                  <Button variant="default" onClick={handleSendToAdmin}>
-                    Send to Admin
+                  <Button 
+                    variant="default" 
+                    onClick={handleSendToAdmin} 
+                    className="bg-orange-500 hover:bg-orange-600 text-white transition-all duration-300 py-3 px-6 rounded-md text-base font-semibold w-full md:w-auto"
+                  >
+                    Order Now
                   </Button>
                 </div>
               </div>

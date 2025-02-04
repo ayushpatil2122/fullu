@@ -72,9 +72,6 @@ export default function Footer() {
         onClick={() => toggleSection(title)}
       >
         {title}
-        <span className="md:hidden">
-          {expandedSection === title ? <ChevronUp className="h-5 w-5" /> : <ChevronDown className="h-5 w-5" />}
-        </span>
       </button>
       <ul>
         {items.map((item) => (

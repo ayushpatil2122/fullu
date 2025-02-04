@@ -6,6 +6,7 @@ import Menu from "@/components/Menu"
 import { useParams } from "next/navigation"
 import { useTableNumber } from "@/hooks/useTableNumber"
 import { store } from "@/store/store"
+import MenuNavbar from "@/components/MenuNavbar"
 
 function Page() {
   const params = useParams()
@@ -20,6 +21,7 @@ function Page() {
 
   return (
     <div className="container mx-auto p-4">
+      <MenuNavbar/>
       {submenu === "cart" ? (
         <Cart tableNumber={tableNumber} />
       ) : (
