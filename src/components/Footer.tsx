@@ -107,7 +107,7 @@ export default function Footer() {
           <div className="space-y-4">
             <div className="flex flex-col items-start gap-2">
               <span className="text-2xl font-bold text-white">Excuse Me!</span>
-              <p className="text-gray-400 text-sm">Powered By: Midnight Solutions</p>
+              <p className="text-gray-400 text-sm">A Product by Midnight Solutions</p>
             </div>
             <p className="text-sm text-gray-400">
               Simplify your dining experience with QR-based ordering. Scan, order, and enjoy!
@@ -139,7 +139,7 @@ export default function Footer() {
                   value: "midnightsolutions750@gmail.com",
                   href: "mailto:midnightsolutions750@gmail.com",
                 },
-                { icon: Phone, label: "Phone:", value: "+91 9423515112", href: "tel:+919423515112" },
+                { icon: Phone, label: "Phone:", value: "+91 9172810750", href: "tel:+919172810750" },
               ].map((item, index) => (
                 <div
                   key={index}
@@ -166,14 +166,10 @@ export default function Footer() {
         {/* Copyright */}
         <div className="mt-8 pt-4 border-t border-gray-800 text-center text-gray-400 text-sm">
           <p>
-            © Excuse Me! | Designed by{" "}
+            © 2025 midnightsolutions.in All rights reserved +91 9172810750, designed by {" "}
             <Link href="#" className="text-[#FF6B2B] hover:text-white transition-colors duration-300">
               Ayush Itkhede
             </Link>{" "}
-            - Powered by{" "}
-            <Link href="#" className="text-[#FF6B2B] hover:text-white transition-colors duration-300">
-              Midnight Solutions
-            </Link>
           </p>
         </div>
       </div>

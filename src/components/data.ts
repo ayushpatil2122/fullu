@@ -26,8 +26,17 @@ export const menuData = {
   Drinks : [
     {name: "Taak" , price: 30},
     {name: "Soal Kadhi" , price: 30},
-    {name: "Dahi" , price: 30}
-
+    {name: "Dahi" , price: 30},
+    {name : "Coke (250 ml)", price : 25},
+    {name : "Coke (750 ml)", price : 40},
+    {name : "Sprite (250 ml)", price : 25},
+    {name : "Sprite (750 ml)", price : 40},
+    {name : "Maaza", price : 25},
+    {name : "Fanta", price : 25},
+    {name : "Limca", price : 25},
+    {name : "Thumps up (250 ml)", price : 20},
+    {name : "Thumps up (750 ml)", price : 40},
+    {name : "Water Bottle", price : 20}
   ],
   Veg : [
     {

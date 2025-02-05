@@ -24,7 +24,7 @@ export default function Navbar() {
               </svg>
             </div>
             <div className="text-xl font-bold">
-              Hotel Jagadamb
+              Hotel Jagdamba
             </div>
           </Link>
         </nav>

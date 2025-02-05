@@ -3,7 +3,7 @@
 import type { RootState } from "@/store/store"
 import { useDispatch, useSelector } from "react-redux"
 import { Button } from "./ui/button"
-import { addToCart, updateQuantity } from "@/store/cartSlice"
+import { addToCart, updateNewItemCount, updateQuantity } from "@/store/cartSlice"
 import { menuData } from "./data"
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
 import { useState, useCallback } from "react"
@@ -28,7 +28,6 @@ type OrderItem = {
 }
 
 const Menu: React.FC<MenuProps> = ({ submenu, tableNumber }) => {
-  const { totalItems } = useCartStore()
   const cartItems = useSelector((state: RootState) => state.cart.items[tableNumber] || [])
   const dispatch = useDispatch()
   const items = menuData[submenu as keyof typeof menuData] || []
@@ -50,6 +49,15 @@ const Menu: React.FC<MenuProps> = ({ submenu, tableNumber }) => {
         return
       }
 
+      dispatch(updateNewItemCount({
+        item: {
+          name: item.name,
+          price: Number(item.price),
+          quantity,
+        },
+        tableNumber,
+      }));
+
       const existingItem = cartItems.find((cartItem) => cartItem.name === item.name)
       if (existingItem) {
         dispatch(updateQuantity({ name: item.name, tableNumber, quantity: existingItem.quantity + quantity }))
@@ -64,6 +72,7 @@ const Menu: React.FC<MenuProps> = ({ submenu, tableNumber }) => {
             tableNumber,
           }),
         )
+
       }
       setQuantities((prev) => ({ ...prev, [item.name]: 0 }))
     },
