@@ -5,25 +5,18 @@ import { useDispatch, useSelector } from "react-redux"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Trash2, Plus, Minus, History } from "lucide-react"
-import { useToast } from "@/hooks/use-toast"
 import { removeFromCart, updateQuantity, clearCart, resetNewItemsCount } from "@/store/cartSlice"
 import type { CartProps, OrderItem } from "@/lib/types"
 import type { RootState } from "@/store/store"
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogDescription, 
-  DialogHeader, 
-  DialogTitle 
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import prisma from "@/lib/db"
+import { OrderConfirmation } from "./ui/OrderConfirmation"
 
 export default function Cart({ tableNumber }: CartProps) {
   const dispatch = useDispatch()
   const orders = useSelector((state: RootState) => state.cart.items[tableNumber] || [])
-  
+
   const [wsConnected, setWsConnected] = useState(false)
   const [showOtpModal, setShowOtpModal] = useState(false)
   const [showOrderHistoryModal, setShowOrderHistoryModal] = useState(false)
@@ -31,8 +24,7 @@ export default function Cart({ tableNumber }: CartProps) {
   const [verifying, setVerifying] = useState(false)
   const [orderHistory, setOrderHistory] = useState<OrderItem[]>([])
   const [isLoadingHistory, setIsLoadingHistory] = useState(false)
-
-  const { toast } = useToast()
+  const [confirmations, setConfirmations] = useState<string[]>([]) // Updated state variable
   const ws = useRef<WebSocket | null>(null)
 
   const connectWebSocket = () => {
@@ -48,8 +40,8 @@ export default function Cart({ tableNumber }: CartProps) {
   }
 
   useEffect(() => {
-    dispatch(resetNewItemsCount());
-  }, [dispatch]);
+    dispatch(resetNewItemsCount())
+  }, [dispatch])
 
   useEffect(() => {
     connectWebSocket()
@@ -60,36 +52,31 @@ export default function Cart({ tableNumber }: CartProps) {
   const checkTableVerification = async () => {
     const tblNo = "0" + tableNumber
     const response = await fetch(`/api/secure?tableNumber=${tblNo}`, {
-      method : 'GET'
+      method: "GET",
     })
-    const verified = await response.json();
-    return verified;
+    const verified = await response.json()
+    return verified
   }
 
   const fetchOrderHistory = async () => {
     setIsLoadingHistory(true)
     try {
       const response = await fetch(`/api/order?tableNumber=${tableNumber}`)
-      
+
       if (!response.ok) {
-        throw new Error('Failed to fetch order history')
+        throw new Error("Failed to fetch order history")
       }
       const history = await response.json()
       setOrderHistory(history)
     } catch (error) {
       console.error("Error fetching order history:", error)
-      toast({
-        title: "Error",
-        description: "Failed to load order history",
-        variant: "destructive"
-      })
     } finally {
       setIsLoadingHistory(false)
     }
   }
 
   function generateRandomString() {
-    return Math.random().toString(36).substring(2, 8);
+    return Math.random().toString(36).substring(2, 8)
   }
 
   const verifyOtp = async () => {
@@ -102,57 +89,40 @@ export default function Cart({ tableNumber }: CartProps) {
         },
         body: JSON.stringify({
           tableNumber,
-          otp
+          otp,
         }),
       })
 
-      const data = await response.json();
+      const data = await response.json()
 
-      // if the otp is correct
       if (response.ok) {
-        toast({
-          title: "Success",
-          description: "OTP verified successfully",
-        })
-
         const tblNo = "0" + tableNumber
-        //make that table secure 
         const response = await fetch(`/api/secure?tableNumber=${tblNo}`, {
-          method : 'PATCH'
+          method: "PATCH",
         })
 
-        const allocatedId = generateRandomString();
-        //save a random id in db and user localstorage
-        await fetch('/api/allocate', {
-          method : 'POST',
+        const allocatedId = generateRandomString()
+        await fetch("/api/allocate", {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            tableNumber : tableNumber,
-            allocatedId : allocatedId
+            tableNumber: tableNumber,
+            allocatedId: allocatedId,
           }),
         })
 
-        localStorage.setItem('allocatedId', allocatedId);
+        localStorage.setItem("allocatedId", allocatedId)
+        saveOrderToDatabase()
 
-        if(response.ok) {
+        if (response.ok) {
           setShowOtpModal(false)
           sendOrderToAdmin()
         }
       } else {
-        toast({
-          title: "Error",
-          description: data.error || "Invalid OTP",
-          variant: "destructive",
-        })
       }
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to verify OTP",
-        variant: "destructive",
-      })
     } finally {
       setVerifying(false)
       setOtp("")
@@ -162,38 +132,33 @@ export default function Cart({ tableNumber }: CartProps) {
   const saveOrderToDatabase = async () => {
     try {
       for (const item of orders) {
-        const response = await fetch('/api/order', {
-          method: 'POST',
+        const response = await fetch("/api/order", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             item: item.name,
             tableNumber,
             price: item.price,
             quantity: item.quantity,
-            totalPrice: item.price * item.quantity
-          })
+            totalPrice: item.price * item.quantity,
+          }),
         })
 
         if (!response.ok) {
-          throw new Error('Failed to save order')
+          throw new Error("Failed to save order")
         }
       }
       return true
     } catch (error) {
       console.error("Error saving order to database:", error)
-      toast({
-        title: "Error",
-        description: "Failed to save order to database",
-        variant: "destructive"
-      })
       return false
     }
   }
 
   const handleSendToAdmin = async () => {
-    const isVerified = await checkTableVerification();
+    const isVerified = await checkTableVerification()
     console.log(isVerified)
 
     if (!isVerified) {
@@ -201,41 +166,35 @@ export default function Cart({ tableNumber }: CartProps) {
       return
     }
 
-    const response = await fetch(`/api/allocate?tableNumber=${tableNumber}`);
-    const allocatedId = await response.json();
-    const storageAllocatedId = localStorage.getItem('allocatedId');
+    const response = await fetch(`/api/allocate?tableNumber=${tableNumber}`)
+    const allocatedId = await response.json()
+    const storageAllocatedId = localStorage.getItem("allocatedId")
 
-    if(allocatedId !== storageAllocatedId) {
-      throw new Error('User Can not order food')
+    if (allocatedId !== storageAllocatedId) {
+      throw new Error("User Can not order food")
     }
 
     const savedSuccessfully = await saveOrderToDatabase()
-    
+
     if (savedSuccessfully) {
       sendOrderToAdmin()
     }
   }
 
   const sendOrderToAdmin = () => {
+    // Updated sendOrderToAdmin function
     if (ws.current?.readyState === WebSocket.OPEN) {
       ws.current.send(
         JSON.stringify({
           type: "admin_order_update",
           tableNumber,
           orders,
-        })
+        }),
       )
-      toast({
-        title: "Order Sent!",
-        description: `Order from Table ${tableNumber} has been sent to the admin.`,
-      })
       dispatch(clearCart(tableNumber))
+      setConfirmations((prev) => [...prev, `Order sent for Table ${tableNumber}`])
     } else {
-      toast({
-        title: "Connection Error",
-        description: "Failed to send order. WebSocket is not connected.",
-        variant: "destructive",
-      })
+      // Handle error
     }
   }
 
@@ -263,13 +222,9 @@ export default function Cart({ tableNumber }: CartProps) {
             <CardTitle className="flex justify-between items-center">
               <span>Table {tableNumber} Order</span>
               <div className="flex items-center gap-2">
-                <span 
-                  className={`h-2 w-2 rounded-full ${
-                    wsConnected ? "bg-green-500" : "bg-red-500"
-                  }`} 
-                />
-                <Button 
-                  variant="outline" 
+                <span className={`h-2 w-2 rounded-full ${wsConnected ? "bg-green-500" : "bg-red-500"}`} />
+                <Button
+                  variant="outline"
                   onClick={() => {
                     fetchOrderHistory()
                     setShowOrderHistoryModal(true)
@@ -278,11 +233,7 @@ export default function Cart({ tableNumber }: CartProps) {
                 >
                   <History className="h-4 w-4 mr-2" /> Order History
                 </Button>
-                <Button 
-                  variant="destructive" 
-                  onClick={handleClearOrder} 
-                  disabled={orders.length === 0}
-                >
+                <Button variant="destructive" onClick={handleClearOrder} disabled={orders.length === 0}>
                   Clear Order
                 </Button>
               </div>
@@ -294,10 +245,7 @@ export default function Cart({ tableNumber }: CartProps) {
             ) : (
               <div className="space-y-4">
                 {orders.map((item) => (
-                  <div
-                    key={item.name}
-                    className="flex justify-between items-center border-b pb-2"
-                  >
+                  <div key={item.name} className="flex justify-between items-center border-b pb-2">
                     <div>
                       <h3 className="font-medium">{item.name}</h3>
                       <div className="flex items-center space-x-2 mt-1">
@@ -319,15 +267,11 @@ export default function Cart({ tableNumber }: CartProps) {
                         >
                           <Plus className="h-3 w-3" />
                         </Button>
-                        <span className="text-sm text-gray-500 ml-2">
-                          × ₹{item.price.toFixed(2)}
-                        </span>
+                        <span className="text-sm text-gray-500 ml-2">× ₹{item.price.toFixed(2)}</span>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <span className="font-medium">
-                        ₹{(item.price * item.quantity).toFixed(2)}
-                      </span>
+                      <span className="font-medium">₹{(item.price * item.quantity).toFixed(2)}</span>
                       <Button
                         variant="ghost"
                         size="icon"
@@ -344,9 +288,9 @@ export default function Cart({ tableNumber }: CartProps) {
                   <span>₹{totalAmount.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-center pt-4">
-                  <Button 
-                    variant="default" 
-                    onClick={handleSendToAdmin} 
+                  <Button
+                    variant="default"
+                    onClick={handleSendToAdmin}
                     className="bg-orange-500 hover:bg-orange-600 text-white transition-all duration-300 py-3 px-6 rounded-md text-base font-semibold w-full md:w-auto"
                   >
                     Order Now
@@ -361,9 +305,7 @@ export default function Cart({ tableNumber }: CartProps) {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Verify Table</DialogTitle>
-            <DialogDescription>
-              Please enter the OTP provided by the admin to verify this table.
-            </DialogDescription>
+            <DialogDescription>Please enter the OTP provided by the admin to verify this table.</DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <Input
@@ -373,49 +315,34 @@ export default function Cart({ tableNumber }: CartProps) {
               type="text"
               maxLength={6}
             />
-            <Button 
-              className="w-full" 
-              onClick={verifyOtp}
-              disabled={verifying || !otp}
-            >
+            <Button className="w-full" onClick={verifyOtp} disabled={verifying || !otp}>
               {verifying ? "Verifying..." : "Verify OTP"}
             </Button>
           </div>
         </DialogContent>
       </Dialog>
-
-      {/* Order History Modal */}
       <Dialog open={showOrderHistoryModal} onOpenChange={setShowOrderHistoryModal}>
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>Order History for Table {tableNumber}</DialogTitle>
-            <DialogDescription>
-              Recent orders for this table
-            </DialogDescription>
+            <DialogDescription>Recent orders for this table</DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             {isLoadingHistory ? (
               <div className="text-center py-4">Loading order history...</div>
             ) : orderHistory.length === 0 ? (
-              <div className="text-center py-4 text-gray-500">
-                No previous orders found
-              </div>
+              <div className="text-center py-4 text-gray-500">No previous orders found</div>
             ) : (
               <ScrollArea className="h-[300px] pr-4">
                 {orderHistory.map((order, index) => (
-                  <div 
-                    key={index} 
-                    className="border-b last:border-b-0 py-2 flex justify-between items-center"
-                  >
+                  <div key={index} className="border-b last:border-b-0 py-2 flex justify-between items-center">
                     <div>
                       <span className="font-medium">{order.item}</span>
                       <div className="text-sm text-gray-500">
                         {order.quantity} × ₹{order.price.toFixed(2)}
                       </div>
                     </div>
-                    <span className="font-medium">
-                      ₹{(order.quantity * order.price).toFixed(2)}
-                    </span>
+                    <span className="font-medium">₹{(order.quantity * order.price).toFixed(2)}</span>
                   </div>
                 ))}
               </ScrollArea>
@@ -423,6 +350,19 @@ export default function Cart({ tableNumber }: CartProps) {
           </div>
         </DialogContent>
       </Dialog>
+      {confirmations.map(
+        (
+          message,
+          index, // Updated OrderConfirmation rendering
+        ) => (
+          <OrderConfirmation
+            key={index}
+            message={message}
+            onClose={() => setConfirmations((prev) => prev.filter((_, i) => i !== index))}
+          />
+        ),
+      )}
     </>
   )
 }
+

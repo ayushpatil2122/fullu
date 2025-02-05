@@ -22,14 +22,13 @@ export default function MenuNavbar() {
 
   return (
     <div className="relative">
-      {/* Main category grid */}
       <div className="p-4 pb-8">
-        <div className="grid grid-cols-6 sm:grid-cols-4 gap-2">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
           {categories.map((category) => (
             <Link href={`${category}`} key={category} className="w-full">
               <button
                 onClick={() => setActiveCategory(category)}
-                className={`w-full py-2 text-sm font-medium border rounded-lg text-center transition-all duration-200 ${
+                className={`w-full py-1 sm:py-2 text-xs sm:text-lg font-medium border rounded-lg text-center transition-all duration-200 ${
                   activeCategory === category
                     ? "bg-orange-500 text-white"
                     : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
@@ -42,14 +41,16 @@ export default function MenuNavbar() {
         </div>
       </div>
 
-      {/* Sticky cart button */}
+
       <Link href="cart" className="fixed bottom-6 right-6">
         <button
-          className="relative bg-orange-500 text-white p-4 rounded-full shadow-lg hover:bg-orange-600 transition-all duration-300 flex items-center justify-center"
+          className="relative bg-orange-500 text-white p-4 rounded-xl shadow-lg hover:bg-orange-600 transition-all duration-300 flex items-center justify-center w-28"
           aria-label="View Cart"
         >
-          <ShoppingCart className="w-6 h-6" />
-          Cart
+          <div className="gap-2 flex">
+            <ShoppingCart className="w-6 h-6" />
+            <span>Cart</span>
+          </div>
           {newItemsCount > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
               {newItemsCount}
