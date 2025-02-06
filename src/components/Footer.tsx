@@ -17,8 +17,6 @@ import {
   ShieldCheck,
   Smile,
   Repeat,
-  ChevronDown,
-  ChevronUp,
 } from "lucide-react"
 
 export default function Footer() {
@@ -113,12 +111,15 @@ export default function Footer() {
               Simplify your dining experience with QR-based ordering. Scan, order, and enjoy!
             </p>
             <div className="flex gap-4">
-              {[Facebook, Twitter, Instagram].map((Icon, index) => (
-                <Link key={index} href="#" className="text-gray-400 hover:text-white transition-colors duration-300">
-                  <Icon className="h-5 w-5" />
-                  <span className="sr-only">{Icon.name}</span>
+                <Link href="https://www.facebook.com/profile.php?id=61572876152256" className="text-gray-400 hover:text-white transition-colors duration-300">
+                  <Facebook className="h-5 w-5" />
                 </Link>
-              ))}
+                <Link href="https://www.instagram.com/excuseme_750" className="text-gray-400 hover:text-white transition-colors duration-300">
+                  <Instagram className="h-5 w-5" />
+                </Link>
+                <Link href="https://x.com/ExcuseME78393?t=75DR28w80FTJQkla7nAceQ&s=09" className="text-gray-400 hover:text-white transition-colors duration-300">
+                  <Twitter className="h-5 w-5" />
+                </Link>
             </div>
           </div>
 

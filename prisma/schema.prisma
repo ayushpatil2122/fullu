@@ -45,3 +45,13 @@ model idAllocated {
   tableNumber String 
   allocatedId String
 }
+
+model Feedback {
+  id              String @id @default(uuid())
+  name            String
+  testRating      Int?
+  quntityRating   Int?
+  easyToUseRating Int?
+  accuracyRating  Int?
+  comment         String?
+}

@@ -220,9 +220,8 @@ export default function Cart({ tableNumber }: CartProps) {
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
-              <span>Table {tableNumber} Order</span>
+              <span>T- 0{tableNumber}</span>
               <div className="flex items-center gap-2">
-                <span className={`h-2 w-2 rounded-full ${wsConnected ? "bg-green-500" : "bg-red-500"}`} />
                 <Button
                   variant="outline"
                   onClick={() => {
@@ -231,7 +230,7 @@ export default function Cart({ tableNumber }: CartProps) {
                   }}
                   aria-label="View Order History"
                 >
-                  <History className="h-4 w-4 mr-2" /> Order History
+                  <History className="h-3 w-3 mr-2" /> Order History
                 </Button>
                 <Button variant="destructive" onClick={handleClearOrder} disabled={orders.length === 0}>
                   Clear Order
