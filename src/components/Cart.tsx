@@ -1,4 +1,3 @@
-"use client"
 
 import { useEffect, useState, useRef } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -24,12 +23,14 @@ export default function Cart({ tableNumber }: CartProps) {
   const [verifying, setVerifying] = useState(false)
   const [orderHistory, setOrderHistory] = useState<OrderItem[]>([])
   const [isLoadingHistory, setIsLoadingHistory] = useState(false)
-  const [confirmations, setConfirmations] = useState<string[]>([]) // Updated state variable
+  const [confirmations, setConfirmations] = useState<string[]>([])
+  const [countdown, setCountdown] = useState<number | null>(null)
+  const [isOrderPending, setIsOrderPending] = useState(false)
   const ws = useRef<WebSocket | null>(null)
 
   const connectWebSocket = () => {
     if (ws.current?.readyState === WebSocket.OPEN) return
-
+  
     ws.current = new WebSocket("wss://ws-production-7739.up.railway.app/")
     ws.current.onopen = () => setWsConnected(true)
     ws.current.onclose = () => {
@@ -92,15 +93,15 @@ export default function Cart({ tableNumber }: CartProps) {
           otp,
         }),
       })
-
+  
       const data = await response.json()
-
+  
       if (response.ok) {
         const tblNo = "0" + tableNumber
-        const response = await fetch(`/api/secure?tableNumber=${tblNo}`, {
+        const secureResponse = await fetch(`/api/secure?tableNumber=${tblNo}`, {
           method: "PATCH",
         })
-
+  
         const allocatedId = generateRandomString()
         await fetch("/api/allocate", {
           method: "POST",
@@ -112,17 +113,20 @@ export default function Cart({ tableNumber }: CartProps) {
             allocatedId: allocatedId,
           }),
         })
-
+  
         localStorage.setItem("allocatedId", allocatedId)
-        saveOrderToDatabase()
-
-        if (response.ok) {
+  
+        if (secureResponse.ok) {
           setShowOtpModal(false)
-          sendOrderToAdmin()
+          // Remove saveOrderToDatabase() from here
+          startCountdown()
         }
       } else {
+        // Handle unsuccessful verification
+        console.error("OTP verification failed");
       }
     } catch (error) {
+      console.error("OTP verification error:", error);
     } finally {
       setVerifying(false)
       setOtp("")
@@ -159,30 +163,52 @@ export default function Cart({ tableNumber }: CartProps) {
 
   const handleSendToAdmin = async () => {
     const isVerified = await checkTableVerification()
-    console.log(isVerified)
-
+  
     if (!isVerified) {
       setShowOtpModal(true)
       return
     }
-
+  
     const response = await fetch(`/api/allocate?tableNumber=${tableNumber}`)
     const allocatedId = await response.json()
     const storageAllocatedId = localStorage.getItem("allocatedId")
-
+  
     if (allocatedId !== storageAllocatedId) {
-      throw new Error("User Can not order food")
+      console.error("User cannot order food")
+      return
     }
-
+  
     const savedSuccessfully = await saveOrderToDatabase()
-
+  
     if (savedSuccessfully) {
-      sendOrderToAdmin()
+      startCountdown()
     }
+  }
+  
+
+  const startCountdown = () => {
+    setIsOrderPending(true)
+    setCountdown(45)
+
+    const interval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev === 1) {
+          clearInterval(interval)
+          sendOrderToAdmin()
+          setIsOrderPending(false)
+        }
+        return prev !== null ? prev - 1 : null
+      })
+    }, 1000)
+  }
+
+  const handleCancelOrder = () => {
+    setCountdown(null)
+    setIsOrderPending(false)
+    dispatch(clearCart(tableNumber))
   }
 
   const sendOrderToAdmin = () => {
-    // Updated sendOrderToAdmin function
     if (ws.current?.readyState === WebSocket.OPEN) {
       ws.current.send(
         JSON.stringify({
@@ -287,13 +313,26 @@ export default function Cart({ tableNumber }: CartProps) {
                   <span>₹{totalAmount.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-center pt-4">
-                  <Button
-                    variant="default"
-                    onClick={handleSendToAdmin}
-                    className="bg-orange-500 hover:bg-orange-600 text-white transition-all duration-300 py-3 px-6 rounded-md text-base font-semibold w-full md:w-auto"
-                  >
-                    Order Now
-                  </Button>
+                  {isOrderPending ? (
+                    <div className="flex flex-col items-center space-y-2">
+                      <Button
+                        variant="destructive"
+                        onClick={handleCancelOrder}
+                        className="w-full"
+                      >
+                        Cancel Order ({countdown}s)
+                      </Button>
+                      <span className="text-sm text-gray-500">Order will be sent in {countdown} seconds...</span>
+                    </div>
+                  ) : (
+                    <Button
+                      variant="default"
+                      onClick={handleSendToAdmin}
+                      className="bg-orange-500 hover:bg-orange-600 text-white transition-all duration-300 py-3 px-6 rounded-md text-base font-semibold w-full md:w-auto"
+                    >
+                      Order Now
+                    </Button>
+                  )}
                 </div>
               </div>
             )}
@@ -349,19 +388,13 @@ export default function Cart({ tableNumber }: CartProps) {
           </div>
         </DialogContent>
       </Dialog>
-      {confirmations.map(
-        (
-          message,
-          index, // Updated OrderConfirmation rendering
-        ) => (
-          <OrderConfirmation
-            key={index}
-            message={message}
-            onClose={() => setConfirmations((prev) => prev.filter((_, i) => i !== index))}
-          />
-        ),
-      )}
+      {confirmations.map((message, index) => (
+        <OrderConfirmation
+          key={index}
+          message={message}
+          onClose={() => setConfirmations((prev) => prev.filter((_, i) => i !== index))}
+        />
+      ))}
     </>
   )
 }
-

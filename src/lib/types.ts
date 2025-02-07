@@ -51,11 +51,10 @@ export const tables = [
 
 
 export interface OrderItem {
-  id: number;
-  item: string;
-  quantity: number;
+  name: string;
   price: number;
-  totalPrice: number;
+  quantity: number;
+  item?: string;  // Keep for backward compatibility
 }
 
 export interface Table {
