@@ -43,7 +43,7 @@ export default function Hero() {
               <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
             </svg>
           </div>
-          <h1 className="text-4xl md:text-5xl lexend font-bold mb-4">Hotel Jagdamba</h1>
+          <h1 className="text-4xl md:text-5xl lexend font-bold mb-4">Excuse Me!</h1>
           <p className="font-bold khula	 text-gray-600 mb-8 ">
           "स्वाद महाराष्ट्राचा, सेवा आमची – बसल्या जागेवर ऑर्डर करा, स्वादिष्ट जेवणाचा आनंद घ्या!"
             <br />          
