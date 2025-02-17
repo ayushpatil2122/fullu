@@ -7,8 +7,7 @@ import { useAppSelector } from "@/hooks/useAppSelector"
 
 export default function MenuNavbar() {
   const categories = [
-    "Starter", "Veg", "Paneer", "Chicken", "Eggs", "Mutton",
-    "Roti", "Dal", "Rice", "Thali", "Chinese", "Drinks"
+    "All", "Beverages", "Fries", "Hot", "Sandwich", "Momos", "Mocktails"
   ]
 
   const pathname = usePathname()

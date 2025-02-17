@@ -6,33 +6,31 @@ export interface MenuItem {
 }
 
 
-export const menuItems: MenuItem[] = [
+export const menuItems = [
   {
     id: 1,
-    name: "Butter Chicken",
-    price: '390-H, 540-F',
-    image: "/assets/butt-chick.jpeg"
+    name: "Cold Coffee",
+    price: 120,
+    image: "/assets/Cold-Coffee.jpeg",
+    rating: 4.5,
+    soldCount: "1000+"
   },
-  
   {
     id: 2,
-    name: "Paneer Masala",
-    price: '220',
-    image: "/assets/paneer masala.jpeg",
+    name: "French Fries",
+    price: 120,
+    image: "/assets/French-Fries.jpeg",
+    rating: 4.5,
+    soldCount: "1000+"
   },
- 
   {
     id: 3,
-    name: "Chicken Tandur",
-    price: '590.',
-    image: "/assets/tandoor.jpeg",
-  },
-  {
-    id: 4,
-    name: "Veg Kolhapuri",
-    price: '140',
-    image: "/assets/Veg kolha.jpeg",
-  },
+    name: "Mojito Mint",
+    price: 90,
+    image: "/assets/Mojito-Mint.jpeg",
+    rating: 4.5,
+    soldCount: "1000+"
+  }
 ]
 
 

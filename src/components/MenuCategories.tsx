@@ -8,57 +8,70 @@ import { useParams } from "next/navigation"
 
 export default function MenuCategories() {
   const params = useParams()
-  const tableNumber = params.selectedTable // Fetch table number from URL parameters
+  const tableNumber = params.selectedTable
 
   const categoryMapping: { [key: string]: string } = {
-    "Main Dishes": "Veg",
-    "Starter": "Starter",
-    "Drinks": "Drinks",
-    "Chinese": "Chinese",
+    "Mocktails": "Mocktails",
+    "Momos": "Momos",
+    "Sandwich": "Sandwich",
+    "Fries": "Fries",
   }
 
   const categories = [
     {
-      title: "Starter",
-      description: "Begin your culinary journey with our exquisite appetizers.",
+      title: "Mocktails",
+      description: "Refresh yourself with our signature mocktails and beverages.",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-12 h-12">
-          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-          <path d="M3.5 14.5s1.5 2 8.5 2 8.5-2 8.5-2" />
-          <path d="M11 4c2.5 0 3.5 1.5 3.5 1.5" />
+          {/* Mocktail glass with straw and garnish */}
+          <path d="M8 2l8 0" />
+          <path d="M12 2v4" />
+          <path d="M6 6l12 0" />
+          <path d="M7 6l2 16h6l2-16" />
+          <path d="M4 6l3 5" />
+          <path d="M20 6l-3 5" />
+          <circle cx="12" cy="10" r="1" />
         </svg>
       ),
     },
     {
-      title: "Main Dishes",
-      description: "Savor our chef's signature creations and hearty entrees.",
+      title: "Momos",
+      description: "Savor our delicious variety of steamed and fried momos.",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-12 h-12">
-          <path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" />
-          <path d="M6 12h12" />
+          {/* Dumpling/momo shape */}
+          <path d="M12 4c4.4 0 8 2.7 8 6s-3.6 6-8 6-8-2.7-8-6 3.6-6 8-6z" />
+          <path d="M4 10s1.5 4 8 4 8-4 8-4" />
+          <path d="M7 8s2-1 5-1 5 1 5 1" />
         </svg>
       ),
     },
     {
-      title: "Drinks",
-      description: "Quench your thirst with our refreshing beverage selection.",
+      title: "Sandwich",
+      description: "Try our fresh and tasty grilled sandwich selections.",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-12 h-12">
-          <path d="M6 2v2a6 6 0 0 0 12 0V2" />
-          <path d="M5 10h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2z" />
-          <path d="M15 14v3" />
-          <path d="M9 14v3" />
+          {/* Sandwich layers */}
+          <path d="M4 7h16" />
+          <path d="M4 12h16" />
+          <path d="M4 17h16" />
+          <path d="M4 7c0-1 1-2 2-2h12c1 0 2 1 2 2" />
+          <path d="M4 17c0 1 1 2 2 2h12c1 0 2-1 2-2" />
         </svg>
       ),
     },
     {
-      title: "Chinese",
-      description: "Explore the delightful flavors of Chinese cuisine.",
+      title: "Fries",
+      description: "Enjoy our crispy and flavorful french fries.",
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-12 h-12">
-          <path d="M5 8h14" />
-          <path d="M12 2v6" />
-          <path d="M5 14a7 7 0 0 0 14 0H5z" />
+          {/* French fries in container */}
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+          <path d="M7 12V5" />
+          <path d="M12 12V3" />
+          <path d="M17 12V5" />
+          <path d="M9 12V7" />
+          <path d="M15 12V7" />
         </svg>
       ),
     },
@@ -78,7 +91,7 @@ export default function MenuCategories() {
 
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           {categories.map((category, index) => {
-            const mappedCategory = categoryMapping[category.title] || category.title // Get mapped category or fallback to original
+            const mappedCategory = categoryMapping[category.title] || category.title
 
             return (
               <motion.div
