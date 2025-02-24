@@ -18,13 +18,16 @@ model Order {
   updatedAt     DateTime @updatedAt
 }
 
-model OrdersHistory {
-  id            String   @id @default(uuid())
-  item          String
-  quantity      Int
-  price         Int
-  totalPrice    Int
+model OrderHistory {
+  id            String    @id @default(uuid())
+  items         String[]
   tableNumber   Int
+  totalAmount   Int
+  paymentMode	  String
+  status        String
+  bookMark      Boolean
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Otp {

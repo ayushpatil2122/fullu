@@ -16,27 +16,14 @@ const geistSans = localFont({
   weight: "100 900",
 });
 
-
-const lexend = Lexend({
-  subsets: ["latin"], // Include Latin subset
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], // Define all weights
-  variable: "--font-lexend",
-});
-
-const lexendDeca = Lexend_Deca({
-  subsets: ["latin"], 
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], 
-  variable: "--font-lexend-deca",
-});
-// Google font
 const kalam = Kalam({
-  subsets: ["latin"], // Include Latin subset
-  weight: ["300", "400", "700"], // Define weights to preload
+  subsets: ["latin"], 
+  weight: ["300", "400", "700"], 
   variable: "--font-kalam",
 });
 const khula = Khula({
-  subsets: ["latin"], // Include Latin subset
-  weight: ["400"], // Define available weights
+  subsets: ["latin"],
+  weight: ["400"], 
   variable: "--font-khula",
 });
 
@@ -61,9 +48,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${kalam.variable} ${khula.variable} antialiased`}
       >
-          <Navbar />
-            {children}
-          <Footer />
+        {children}
+        <Footer />
       </body>
     </html>
   );

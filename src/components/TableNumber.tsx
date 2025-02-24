@@ -13,6 +13,12 @@ const tables = [
   { id: 6, number: 6, capacity: 4 },
   { id: 7, number: 7, capacity: 2 },
   { id: 8, number: 8, capacity: 6 },
+  { id: 9, number: 9, capacity: 6 },
+  { id: 10, number: 10, capacity: 6 },
+  { id: 12, number: 12, capacity: 6 },
+  { id: 13, number: 13, capacity: 6 },
+  { id: 14, number: 14, capacity: 6 },
+  { id: 15, number: 15, capacity: 6 },
 ]
 
 export default function TableNumber() {
